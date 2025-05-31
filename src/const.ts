@@ -3,7 +3,6 @@ import { Values } from './types/common';
 
 const NEAR_OFFERS_COUNT = 3;
 const MIN_REVIEW_LENGTH = 50;
-const TIMEOUT_SHOW_ERROR = 2000;
 
 const AppRoute = {
   Root: '/',
@@ -11,6 +10,8 @@ const AppRoute = {
   Offer: '/offer/:offerId',
   Favorites: '/favorites',
 } as const;
+
+type AppRouteType = Values<typeof AppRoute>;
 
 const AuthorizationStatus = {
   Auth: 'AUTH',
@@ -87,12 +88,11 @@ const CITIES: Record<string, City> = {
   },
 } as const;
 
-export type { AuthorizationStatusType, APIRouteType };
+export type { AppRouteType, AuthorizationStatusType, APIRouteType };
 
 export {
   NEAR_OFFERS_COUNT,
   MIN_REVIEW_LENGTH,
-  TIMEOUT_SHOW_ERROR,
   AppRoute,
   AuthorizationStatus,
   APIRoute,
