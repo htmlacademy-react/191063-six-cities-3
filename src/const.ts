@@ -1,7 +1,9 @@
 import { City } from './types/city';
+import { Values } from './types/common';
 
 const NEAR_OFFERS_COUNT = 3;
 const MIN_REVIEW_LENGTH = 50;
+const TIMEOUT_SHOW_ERROR = 2000;
 
 const AppRoute = {
   Root: '/',
@@ -16,7 +18,17 @@ const AuthorizationStatus = {
   Unknown: 'UNKNOWN',
 } as const;
 
-const RatingType = {
+type AuthorizationStatusType = Values<typeof AuthorizationStatus>;
+
+const APIRoute = {
+  Login: '/login',
+  Logout: '/logout',
+  Offers: '/offers',
+} as const;
+
+type APIRouteType = Values<typeof APIRoute>;
+
+const RatingOption = {
   Perfect: { value: 5, title: 'perfect' },
   Good: { value: 4, title: 'good' },
   NotBad: { value: 3, title: 'not bad' },
@@ -75,11 +87,15 @@ const CITIES: Record<string, City> = {
   },
 } as const;
 
+export type { AuthorizationStatusType, APIRouteType };
+
 export {
   NEAR_OFFERS_COUNT,
   MIN_REVIEW_LENGTH,
+  TIMEOUT_SHOW_ERROR,
   AppRoute,
   AuthorizationStatus,
-  RatingType,
+  APIRoute,
+  RatingOption,
   CITIES,
 };

@@ -1,4 +1,4 @@
-import { OfferPreview } from '../../types/offer';
+import { OfferPreview, OfferPreviews } from '../../types/offer';
 import { SortOptionType } from './types';
 
 function comparePriceUp(
@@ -23,9 +23,9 @@ function compareRatingDown(
 }
 
 function sortOfferPreviews(
-  offerPreviews: OfferPreview[],
+  offerPreviews: OfferPreviews,
   sortOption: SortOptionType
-): OfferPreview[] {
+): OfferPreviews {
   switch (sortOption) {
     case 'PriceUp':
       return offerPreviews.toSorted(comparePriceUp);

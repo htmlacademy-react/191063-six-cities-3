@@ -1,7 +1,7 @@
-import { OfferPreview } from '../types/offer';
+import { OfferPreview, OfferPreviews } from '../types/offer';
 
 function getOfferPreviewById(
-  offerPreviews: OfferPreview[],
+  offerPreviews: OfferPreviews,
   offerId: string
 ): OfferPreview {
   return offerPreviews.filter((offerPreview) => offerPreview.id === offerId)[0];

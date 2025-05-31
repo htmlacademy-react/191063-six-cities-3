@@ -1,9 +1,9 @@
-import { OfferPreview } from '../../types/offer';
+import { OfferPreviews } from '../../types/offer';
 import { getCitiesWithFavorites, getCityOffers } from '../../utils/city-utils';
 import FavoriteListItem from './favorite-list-item';
 
 type FavoriteListProps = {
-  offerPreviews: OfferPreview[];
+  offerPreviews: OfferPreviews;
 };
 
 function FavoriteList(props: FavoriteListProps): JSX.Element {
