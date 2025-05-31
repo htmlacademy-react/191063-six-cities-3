@@ -1,36 +1,37 @@
-import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { selectFavoriteOfferPreviews } from '../../store/selectors';
-import { getFavoriteOffers } from '../../store/api-actions';
+import { offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import useAppSelector from '../../hooks/use-app-selector';
-import useAppDispatch from '../../hooks/use-app-dispatch';
 import Header from '../../components/header';
 import FavoriteList from '../../components/favorite-list';
 import Footer from '../../components/footer';
 import FavoriteEmpty from '../../components/favorite-empty';
+import useUpdateFavoriteOffer from '../../hooks/use-update-favorite-offer';
 
 function FavoritesPage(): JSX.Element {
-  const favoriteOfferPreviews = useAppSelector(selectFavoriteOfferPreviews);
-  const favoriteEmpty = favoriteOfferPreviews.length === 0;
-  const pageAddClass = favoriteEmpty ? ' page--favorites-empty' : '';
-  const mainAddClass = favoriteEmpty ? ' page__main--favorites-empty' : '';
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getFavoriteOffers());
-  }, [dispatch]);
+  const favoriteOfferPreviews = useAppSelector(
+    offersSelectors.selectFavoriteOfferPreviews
+  );
+  const updateFavoriteClick = useUpdateFavoriteOffer();
+  const isFavoriteEmpty = favoriteOfferPreviews.length === 0;
+  const pageAddClass = isFavoriteEmpty ? ' page--favorites-empty' : '';
+  const mainAddClass = isFavoriteEmpty ? ' page__main--favorites-empty' : '';
 
   return (
     <div className={`page${pageAddClass}`}>
       <Helmet>
         <title>6 Cities. Favorites</title>
       </Helmet>
-      <Header />
+      <Header showUser/>
       <main className={`page__main page__main--favorites${mainAddClass}`}>
         <div className="page__favorites-container container">
-          {favoriteEmpty
-            ? <FavoriteEmpty />
-            : <FavoriteList offerPreviews={favoriteOfferPreviews} />}
+          {isFavoriteEmpty ? (
+            <FavoriteEmpty />
+          ) : (
+            <FavoriteList
+              offerPreviews={favoriteOfferPreviews}
+              onFavoriteClick={updateFavoriteClick}
+            />
+          )}
         </div>
       </main>
       <Footer />

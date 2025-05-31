@@ -1,5 +1,5 @@
-import { DateFormat } from '../../const';
-import { Review } from '../../types/review';
+import { DateFormat } from '../../const/app-const';
+import { Review } from '../../types/review-types';
 import { getFormattedDate } from '../../utils/date-utils';
 import { getRatingWidth } from '../../utils/offer-utils';
 

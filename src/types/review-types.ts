@@ -1,7 +1,7 @@
 import { ReactEventHandler } from 'react';
-import { User } from './user';
+import { User } from './user-types';
 
-type Review = {
+export type Review = {
   id: string;
   date: string;
   user: User;
@@ -9,15 +9,13 @@ type Review = {
   rating: number;
 };
 
-type Reviews = Review[];
+export type Reviews = Review[];
 
-type NewReview = {
+export type NewReview = {
   comment: string;
   rating: number;
 };
 
-type ReviewChangeHandler = ReactEventHandler<
+export type ReviewChangeHandler = ReactEventHandler<
   HTMLInputElement | HTMLTextAreaElement
 >;
-
-export type { Review, Reviews, NewReview, ReviewChangeHandler };

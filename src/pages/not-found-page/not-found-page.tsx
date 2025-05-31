@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../const/app-const';
 import Header from '../../components/header';
 
 function NotFoundPage(): JSX.Element {
@@ -9,7 +9,7 @@ function NotFoundPage(): JSX.Element {
       <Helmet>
         <title>6 Cities. Not Found</title>
       </Helmet>
-      <Header />
+      <Header showUser={false}/>
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -22,13 +22,6 @@ function NotFoundPage(): JSX.Element {
                 </button>
               </Link>
             </form>
-          </section>
-          <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
-            </div>
           </section>
         </div>
       </main>

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
-import { City } from '../types/city';
 import leaflet from 'leaflet';
+import { City } from '../types/app-types';
 
 const mapStyle =
   'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';

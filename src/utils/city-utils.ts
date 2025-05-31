@@ -1,8 +1,8 @@
-import { CITIES } from '../const';
-import { City } from '../types/city';
-import { OfferPreviews } from '../types/offer';
+import { CITIES } from '../const/app-const';
+import { City } from '../types/app-types';
+import { OfferPreviews } from '../types/offer-types';
 
-function getCitiesWithFavorites(offerPreviews: OfferPreviews): City[] | null {
+export function getCitiesWithFavorites(offerPreviews: OfferPreviews): City[] | null {
   const citiesNamesWithFavorites = new Set(
     offerPreviews.map((offerPreview) => offerPreview.city.name)
   );
@@ -14,7 +14,7 @@ function getCitiesWithFavorites(offerPreviews: OfferPreviews): City[] | null {
   return citiesWithFavorites;
 }
 
-function getCityOffers(
+export function getCityOffers(
   city: City,
   offerPreviews: OfferPreviews
 ): OfferPreviews {
@@ -22,5 +22,3 @@ function getCityOffers(
     (offerPreview) => offerPreview.city.name === city.name
   );
 }
-
-export { getCitiesWithFavorites, getCityOffers };

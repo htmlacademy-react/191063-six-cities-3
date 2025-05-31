@@ -1,4 +1,4 @@
-import { OfferPreview } from '../../types/offer';
+import { OfferPreview } from '../../types/offer-types';
 
 type OfferMapProps = {
   hoveredOffer: OfferPreview | null;

@@ -1,13 +1,9 @@
 import { FormEvent, useState } from 'react';
-import { ReviewChangeHandler } from '../../types/review';
-import {
-  MIN_REVIEW_LENGTH,
-  MAN_REVIEW_LENGTH,
-  RatingOption,
-  RequestStatus,
-} from '../../const';
-import { selectPostReviewStatus } from '../../store/selectors';
-import { postReview } from '../../store/api-actions';
+import { ReviewChangeHandler } from '../../types/review-types';
+import { MAN_REVIEW_LENGTH, MIN_REVIEW_LENGTH } from '../../const/review-const';
+import { RequestStatus } from '../../const/api-const';
+import { RatingOption } from '../../const/app-const';
+import { fullOfferActions, fullOfferSelectors } from '../../store/slices/full-offer-slice/full-offer-slice';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import ReviewRatingStar from './review-rating-star';
@@ -19,7 +15,7 @@ type ReviewFormProps = {
 function ReviewForm(props: ReviewFormProps): JSX.Element {
   const { offerId } = props;
   const dispatch = useAppDispatch();
-  const postReviewStatus = useAppSelector(selectPostReviewStatus);
+  const postReviewStatus = useAppSelector(fullOfferSelectors.selectPostReviewStatus);
   const [review, setReview] = useState({
     comment: '',
     rating: 0,
@@ -45,7 +41,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(postReview({ offerId, review }));
+    dispatch(fullOfferActions.postReview({ offerId, review }));
     evt.currentTarget.reset();
     setReview({
       comment: '',

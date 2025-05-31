@@ -1,3 +1,4 @@
+import { FULL_OFFER_IMAGES_COUNT } from '../../const/offer-const';
 import OfferGalleryImage from './offer-gallery-image';
 
 type OfferGalleryProps = {
@@ -10,7 +11,7 @@ function OfferGallery(props: OfferGalleryProps): JSX.Element {
   return (
     <div className="offer__gallery-container container">
       <div className="offer__gallery">
-        {images.map((image) => (
+        {images.slice(0, FULL_OFFER_IMAGES_COUNT).map((image) => (
           <OfferGalleryImage key={image} src={image} />
         ))}
       </div>

@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
-import { OfferPreview } from '../../types/offer';
-import { AppRoute } from '../../const';
+import { OfferPreview } from '../../types/offer-types';
+import { AppRoute } from '../../const/app-const';
 import { getCapitalizedString } from '../../utils/common-utils';
 import { getRatingWidth } from '../../utils/offer-utils';
 import { OfferPreviewListType } from '../offer-preview-list/offer-preview-list-type';
 import { getOfferCardMediumClasses } from './offer-card-medium-utils';
+import { updateFavoriteOfferType } from '../../hooks/use-update-favorite-offer';
+import FavoriteButton from '../favorite-button';
 
 type OfferCardMediumProps = {
   cardType: OfferPreviewListType;
   offerPreview: OfferPreview;
   onHover?: (hoveredOffer: OfferPreview | null) => void;
+  onFavoriteClick: updateFavoriteOfferType;
 };
 
 function OfferCardMedium(props: OfferCardMediumProps): JSX.Element {
@@ -25,6 +28,7 @@ function OfferCardMedium(props: OfferCardMediumProps): JSX.Element {
   } = props.offerPreview;
   const cardType = props.cardType;
   const onHover = props.onHover;
+  const onFavoriteClick = props.onFavoriteClick;
 
   const offerLink = AppRoute.Offer.replace(':offerId', id);
   const additionalClasses = getOfferCardMediumClasses(cardType);
@@ -32,8 +36,13 @@ function OfferCardMedium(props: OfferCardMediumProps): JSX.Element {
   const handleMouseEnter = () => {
     onHover?.(props.offerPreview);
   };
+
   const handleMouseLeave = () => {
     onHover?.(null);
+  };
+
+  const handleFavoriteClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    onFavoriteClick(evt, id, isFavorite);
   };
 
   return (
@@ -64,19 +73,11 @@ function OfferCardMedium(props: OfferCardMediumProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={`place-card__bookmark-button button ${
-              isFavorite ? 'place-card__bookmark-button--active' : ''
-            }`}
-            type="button"
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">
-              {isFavorite ? 'In bookmarks' : 'To bookmarks'}
-            </span>
-          </button>
+          <FavoriteButton
+            buttonType='PlaceCard'
+            isFavorite={isFavorite}
+            onClick={handleFavoriteClick}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

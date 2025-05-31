@@ -1,6 +1,5 @@
-import { City } from '../../types/city';
-import { setCity } from '../../store/action';
-import { selectCity } from '../../store/selectors';
+import { City } from '../../types/app-types';
+import { offersActions, offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 
@@ -10,12 +9,13 @@ type NavigationItemProps = {
 
 function NavigationItem(props: NavigationItemProps): JSX.Element {
   const { itemCity } = props;
-  const currentCity = useAppSelector(selectCity);
-  const activeClass = itemCity.name === currentCity.name ? ' tabs__item--active' : '';
+  const currentCity = useAppSelector(offersSelectors.selectCity);
+  const activeClass =
+    itemCity.name === currentCity.name ? ' tabs__item--active' : '';
   const dispatch = useAppDispatch();
 
   const handleItemClick = () => {
-    dispatch(setCity(itemCity));
+    dispatch(offersActions.setCity(itemCity));
   };
 
   return (
