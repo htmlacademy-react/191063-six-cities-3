@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { OfferPreview } from '../../types/offer';
 import { getOfferPreviewById, getRatingWidth } from '../../utils/offer-utils';
 import { getMockReviews } from '../../mock/reviews-mock';
 import { offerMock } from '../../mock/offer-mock';
@@ -13,15 +12,12 @@ import OfferHost from '../../components/offer-host';
 import OfferReviews from '../../components/offer-reviews';
 import OfferPreviewList from '../../components/offer-preview-list';
 import Map from '../../components/map';
+import useAppSelector from '../../hooks/use-app-selector';
 
 const mockReviews = getMockReviews();
 
-type OfferPageProps = {
-  offerPreviews: OfferPreview[];
-};
-
-function OfferPage(props: OfferPageProps): JSX.Element {
-  const { offerPreviews } = props;
+function OfferPage(): JSX.Element {
+  const offerPreviews = useAppSelector((state) => state.offerPreviews);
   const { offerId = '' } = useParams();
 
   const offerPreview = getOfferPreviewById(offerPreviews, offerId);

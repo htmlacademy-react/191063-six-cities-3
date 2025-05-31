@@ -1,29 +1,29 @@
 import { OfferPreview } from '../types/offer';
 
 const mockOfferPreviews: OfferPreview[] = [
-  {
-    id: '89b6ae84-2724-4369-ab85-6877dbdd2795',
-    title: 'Perfectly located Castro',
-    type: 'room',
-    price: 299,
-    previewImage: 'https://16.design.htmlacademy.pro/static/hotel/5.jpg',
-    city: {
-      name: 'Paris',
-      location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
-        zoom: 13,
-      },
-    },
-    location: {
-      latitude: 48.868610000000004,
-      longitude: 2.342499,
-      zoom: 16,
-    },
-    isFavorite: false,
-    isPremium: false,
-    rating: 3.4,
-  },
+  // {
+  //   id: '89b6ae84-2724-4369-ab85-6877dbdd2795',
+  //   title: 'Perfectly located Castro',
+  //   type: 'room',
+  //   price: 299,
+  //   previewImage: 'https://16.design.htmlacademy.pro/static/hotel/5.jpg',
+  //   city: {
+  //     name: 'Paris',
+  //     location: {
+  //       latitude: 48.85661,
+  //       longitude: 2.351499,
+  //       zoom: 13,
+  //     },
+  //   },
+  //   location: {
+  //     latitude: 48.868610000000004,
+  //     longitude: 2.342499,
+  //     zoom: 16,
+  //   },
+  //   isFavorite: false,
+  //   isPremium: false,
+  //   rating: 3.4,
+  // },
   {
     id: 'e5a2a853-caba-47a1-b63e-c9c649021122',
     title: 'House in countryside',

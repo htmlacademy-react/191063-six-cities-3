@@ -21,4 +21,8 @@ function pluralize(noun: string, count: number): string {
   }
 }
 
-export { getCapitalizedString, pluralize };
+function isEscapeKey(evt: KeyboardEvent): boolean {
+  return evt.key === 'Escape';
+}
+
+export { getCapitalizedString, pluralize, isEscapeKey };

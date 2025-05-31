@@ -1,23 +1,32 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferPreview } from '../../types/offer';
-import { CITIES } from '../../const';
+import { SortType } from '../../types/sort';
+import { SortOption } from '../../const';
 import { getCityOffers } from '../../utils/city-utils';
+import { pluralize } from '../../utils/common-utils';
+import { sortOfferPreviews } from '../../utils/sort-utils';
 import Header from '../../components/header';
 import Navigation from '../../components/navigation';
 import Sort from '../../components/sort';
 import Map from '../../components/map';
 import OfferPreviewList from '../../components/offer-preview-list';
+import useAppSelector from '../../hooks/use-app-selector';
 
-type MainPageProps = {
-  offerPreviews: OfferPreview[];
-};
-
-function MainPage(props: MainPageProps): JSX.Element {
-  const { offerPreviews } = props;
+function MainPage(): JSX.Element {
   const [hoveredOffer, setHoveredOffer] = useState<OfferPreview | null>(null);
-  const currentCity = CITIES.Amsterdam;
-  const currentCityOffers = getCityOffers(currentCity, offerPreviews);
+  const [sortOption, setSortOption] = useState<SortType>(SortOption.Popular);
+  const currentCity = useAppSelector((state) => state.city);
+  const allOfferPreviews = useAppSelector((state) => state.offerPreviews);
+
+  const cityOfferPreviews = getCityOffers(currentCity, allOfferPreviews);
+  const sortedOfferPreviews = sortOfferPreviews(cityOfferPreviews, sortOption);
+
+  const countOfferPreviews = sortedOfferPreviews.length;
+
+  const handleSetSortOption = (newSortOption: SortType): void => {
+    setSortOption(newSortOption);
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -26,18 +35,21 @@ function MainPage(props: MainPageProps): JSX.Element {
       </Helmet>
       <Header />
       <main className="page__main page__main--index">
-        <Navigation currentCity={currentCity} />
+        <Navigation />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {currentCityOffers.length} places to stay in {currentCity.name}
+                {`${countOfferPreviews} ${pluralize('place', countOfferPreviews)} to stay in ${currentCity.name}`}
               </b>
-              <Sort />
+              <Sort
+                currentSortOption={sortOption}
+                handleSetSortOption={handleSetSortOption}
+              />
               <OfferPreviewList
                 listType={'Cities'}
-                offerPreviews={currentCityOffers}
+                offerPreviews={sortedOfferPreviews}
                 onOfferCardHover={setHoveredOffer}
               />
             </section>
@@ -45,7 +57,7 @@ function MainPage(props: MainPageProps): JSX.Element {
               <Map
                 pageType={'Main'}
                 city={currentCity}
-                offerPreviews={currentCityOffers}
+                offerPreviews={sortedOfferPreviews}
                 hoveredOffer={hoveredOffer}
               />
             </div>
