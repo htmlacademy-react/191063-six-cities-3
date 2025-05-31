@@ -1,9 +1,14 @@
 type User = {
-  email: string;
-  token: string;
   name: string;
   avatarUrl: string;
   isPro: boolean;
 };
 
-export type { User };
+type UserAuth = {
+  email: string;
+  token: string;
+};
+
+type CurrentUser = User & UserAuth;
+
+export type { User, UserAuth, CurrentUser };

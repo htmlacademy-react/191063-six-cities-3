@@ -3,11 +3,12 @@ import { ReviewChangeHandler } from '../../types/review';
 type ReviewRatingStarProps = {
   value: number;
   title: string;
+  disabled: boolean;
   onChange: ReviewChangeHandler;
 };
 
 function ReviewRatingStar(props: ReviewRatingStarProps): JSX.Element {
-  const { value, title } = props;
+  const { value, title, disabled } = props;
   const handleUpdateReviewRating = props.onChange;
 
   return (
@@ -18,6 +19,7 @@ function ReviewRatingStar(props: ReviewRatingStarProps): JSX.Element {
         defaultValue={value}
         id={`${value}-stars`}
         type="radio"
+        disabled={disabled}
         onChange={handleUpdateReviewRating}
       />
       <label

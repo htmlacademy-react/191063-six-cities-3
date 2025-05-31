@@ -11,15 +11,20 @@ function FavoriteList(props: FavoriteListProps): JSX.Element {
   const citiesWithFavorites = getCitiesWithFavorites(offerPreviews);
 
   return (
-    <ul className="favorites__list">
-      {citiesWithFavorites ? citiesWithFavorites.map((city) => (
-        <FavoriteListItem
-          key={city.name}
-          cityName={city.name}
-          offerPreviews={getCityOffers(city, offerPreviews)}
-        />
-      )) : null}
-    </ul>
+    <section className="favorites">
+      <h1 className="favorites__title">Saved listing</h1>
+      <ul className="favorites__list">
+        {citiesWithFavorites
+          ? citiesWithFavorites.map((city) => (
+            <FavoriteListItem
+              key={city.name}
+              cityName={city.name}
+              offerPreviews={getCityOffers(city, offerPreviews)}
+            />
+          ))
+          : null}
+      </ul>
+    </section>
   );
 }
 

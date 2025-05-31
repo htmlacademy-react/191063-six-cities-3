@@ -4,19 +4,27 @@ import { OfferPreview } from '../../types/offer';
 import { getCityOffers } from '../../utils/city-utils';
 import { pluralize } from '../../utils/common-utils';
 import { sortOfferPreviews } from '../../components/sort/utils';
-import { selectCity, selectOfferPreviews, selectSortOption } from '../../store/selectors';
+import { selectCity, selectOfferPreviews, selectOfferPreviewsStatus, selectSortOption } from '../../store/selectors';
 import Header from '../../components/header';
 import Navigation from '../../components/navigation';
 import Sort from '../../components/sort';
 import Map from '../../components/map';
 import OfferPreviewList from '../../components/offer-preview-list';
 import useAppSelector from '../../hooks/use-app-selector';
+import LoadingPage from '../loading-page';
 
 function MainPage(): JSX.Element {
   const [hoveredOffer, setHoveredOffer] = useState<OfferPreview | null>(null);
   const currentCity = useAppSelector(selectCity);
   const currentSortOption = useAppSelector(selectSortOption);
   const allOfferPreviews = useAppSelector(selectOfferPreviews);
+  const offerPreviewsStatus = useAppSelector(
+    selectOfferPreviewsStatus
+  );
+
+  if (offerPreviewsStatus === 'Loading') {
+    return <LoadingPage />;
+  }
 
   const cityOfferPreviews = getCityOffers(currentCity, allOfferPreviews);
   const sortedOfferPreviews = sortOfferPreviews(
