@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
-import { placeCardCount } from './const';
+import App from './components/app';
+import { getMockOfferPreviews } from './mock/offer-previews-mock';
+
+const offerPreviews = getMockOfferPreviews();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,6 +11,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App placeCardCount={placeCardCount} />
+    <App offerPreviews={offerPreviews}/>
   </React.StrictMode>
 );

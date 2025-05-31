@@ -1,29 +1,64 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import MainScreen from '../../pages/main-screen/main-screen';
-import LoginScreen from '../../pages/login-screen/login-screen';
-import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
-import OfferScreen from '../../pages/offer-screen/offer-screen';
-import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import PrivateRoute from '../private-route/private-route';
+import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { NEAR_OFFERS_COUNT, AppRoute, AuthorizationStatus } from '../../const';
+import { OfferPreview } from '../../types/offer';
+import { offerMock } from '../../mock/offer-mock';
+import { getMockAuthStatus } from '../../mock/auth-status-mock';
+import { isUserLoggedIn } from '../../utils';
+import MainPage from '../../pages/main-page';
+import LoginPage from '../../pages/login-page';
+import OfferPage from '../../pages/offer-page';
+import FavoritesPage from '../../pages/favorites-page';
+import NotFoundPage from '../../pages/not-found-page';
+import PrivateRoute from '../private-route';
 
-type AppScreenProps = {
-  placeCardCount: number;
-}
+const isLoggedIn = isUserLoggedIn(getMockAuthStatus());
 
-function App({placeCardCount}: AppScreenProps): JSX.Element {
+type AppProps = {
+  offerPreviews: OfferPreview[];
+};
+
+function App(props: AppProps): JSX.Element {
+  const { offerPreviews } = props;
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Main}>
-          <Route index element={<MainScreen placeCardCount={placeCardCount} />} />
-          <Route path={AppRoute.Login} element={<LoginScreen />} />
-          <Route path={AppRoute.Favorites} element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}><FavoritesScreen /></PrivateRoute>} />
-          <Route path={AppRoute.Offer} element={<OfferScreen />}/>
-          <Route path='*' element={<NotFoundScreen />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={AppRoute.Root}
+            element={<MainPage offerPreviews={offerPreviews} />}
+          />
+          <Route
+            path={AppRoute.Login}
+            element={
+              isLoggedIn ? <Navigate to={AppRoute.Root} /> : <LoginPage />
+            }
+          />
+          <Route
+            path={AppRoute.Offer}
+            element={
+              <OfferPage offer={offerMock} offerPreviews={offerPreviews.slice(0, NEAR_OFFERS_COUNT)} />
+            }
+          />
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute
+                authorizationStatus={
+                  isLoggedIn
+                    ? AuthorizationStatus.Auth
+                    : AuthorizationStatus.NoAuth
+                }
+              >
+                <FavoritesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
