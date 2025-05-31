@@ -1,8 +1,8 @@
 import { Location } from './location';
-import { CityName } from '../const';
+import { CITIES } from '../const';
 
 type City = {
-  name: keyof typeof CityName;
+  name: keyof typeof CITIES;
   location: Location;
 };
 

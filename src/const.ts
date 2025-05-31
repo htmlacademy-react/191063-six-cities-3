@@ -16,11 +16,11 @@ const AuthorizationStatus = {
   Unknown: 'UNKNOWN',
 } as const;
 
-const SortType = {
-  Popular: 'Popular',
-  PriceUp: 'Price: low to high',
-  PriceDown: 'Price: high to low',
-  TopRated: 'Top rated first',
+const SortOption = {
+  Popular: { title: 'Popular' },
+  PriceUp: { title: 'Price: low to high' },
+  PriceDown: { title: 'Price: high to low' },
+  TopRated: { title: 'Top rated first' },
 } as const;
 
 const RatingType = {
@@ -31,16 +31,7 @@ const RatingType = {
   Terribly: { value: 1, title: 'terribly' },
 } as const;
 
-const CityName = {
-  Paris: 'Paris',
-  Cologne: 'Cologne',
-  Brussels: 'Brussels',
-  Amsterdam: 'Amsterdam',
-  Hamburg: 'Hamburg',
-  Dusseldorf: 'Dusseldorf',
-} as const;
-
-const CITIES: Record<keyof typeof CityName, City> = {
+const CITIES: Record<string, City> = {
   Paris: {
     name: 'Paris',
     location: {
@@ -96,8 +87,7 @@ export {
   MIN_REVIEW_LENGTH,
   AppRoute,
   AuthorizationStatus,
-  SortType,
+  SortOption,
   RatingType,
-  CityName,
   CITIES,
 };

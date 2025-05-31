@@ -33,6 +33,7 @@ function Map(props: MapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       markerLayerRef.current.clearLayers();
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
       offerPreviews.forEach((offerPreview) => {
         leaflet
           .marker(
@@ -50,7 +51,7 @@ function Map(props: MapProps): JSX.Element {
           .addTo(markerLayerRef.current);
       });
     }
-  }, [map, offerPreviews, hoveredOffer]);
+  }, [map, city, offerPreviews, hoveredOffer]);
 
   return <section className={mapClasses.sectionClass} ref={mapRef}></section>;
 }

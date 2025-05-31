@@ -1,7 +1,6 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { OfferPreview } from '../../types/offer';
 import { getMockAuthStatus } from '../../mock/auth-status-mock';
 import { isUserLoggedIn } from '../../utils/app-utils';
 import MainPage from '../../pages/main-page';
@@ -13,20 +12,15 @@ import PrivateRoute from '../private-route';
 
 const isLoggedIn = isUserLoggedIn(getMockAuthStatus());
 
-type AppProps = {
-  offerPreviews: OfferPreview[];
-};
-
-function App(props: AppProps): JSX.Element {
-  const { offerPreviews } = props;
-
+function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offerPreviews={offerPreviews} />}
+            element={<MainPage />}
+
           />
           <Route
             path={AppRoute.Login}
@@ -36,7 +30,7 @@ function App(props: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferPage offerPreviews={offerPreviews} />}
+            element={<OfferPage />}
           />
           <Route
             path={AppRoute.Favorites}
