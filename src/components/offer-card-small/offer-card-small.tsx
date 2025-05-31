@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { getCapitalizedString, getRatingWidth } from '../../utils';
 import { OfferPreview } from '../../types/offer';
+import { AppRoute } from '../../const';
+import { getCapitalizedString } from '../../utils/common-utils';
+import { getRatingWidth } from '../../utils/offer-utils';
 
 type OfferCardProps = {
   offerPreview: OfferPreview;
@@ -18,7 +19,7 @@ function OfferCardSmall(props: OfferCardProps): JSX.Element {
     previewImage,
     rating,
   } = props.offerPreview;
-  const offerLink = AppRoute.Offer.replace(':id', id);
+  const offerLink = AppRoute.Offer.replace(':offerId', id);
 
   return (
     <article className="favorites__card place-card">

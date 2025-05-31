@@ -1,10 +1,9 @@
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { NEAR_OFFERS_COUNT, AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { OfferPreview } from '../../types/offer';
-import { offerMock } from '../../mock/offer-mock';
 import { getMockAuthStatus } from '../../mock/auth-status-mock';
-import { isUserLoggedIn } from '../../utils';
+import { isUserLoggedIn } from '../../utils/app-utils';
 import MainPage from '../../pages/main-page';
 import LoginPage from '../../pages/login-page';
 import OfferPage from '../../pages/offer-page';
@@ -37,9 +36,7 @@ function App(props: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={
-              <OfferPage offer={offerMock} offerPreviews={offerPreviews.slice(0, NEAR_OFFERS_COUNT)} />
-            }
+            element={<OfferPage offerPreviews={offerPreviews} />}
           />
           <Route
             path={AppRoute.Favorites}

@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { getCapitalizedString, getRatingWidth } from '../../utils';
 import { OfferPreview } from '../../types/offer';
+import { AppRoute } from '../../const';
+import { getCapitalizedString } from '../../utils/common-utils';
+import { getRatingWidth } from '../../utils/offer-utils';
+import { OfferPreviewListType } from '../offer-preview-list/offer-preview-list-type';
+import { getOfferCardMediumClasses } from './offer-card-medium-utils';
 
 type OfferCardMediumProps = {
+  cardType: OfferPreviewListType;
   offerPreview: OfferPreview;
-  onHover: (hoveredOffer: OfferPreview | null) => void;
+  onHover?: (hoveredOffer: OfferPreview | null) => void;
 };
 
 function OfferCardMedium(props: OfferCardMediumProps): JSX.Element {
@@ -19,22 +23,31 @@ function OfferCardMedium(props: OfferCardMediumProps): JSX.Element {
     previewImage,
     rating,
   } = props.offerPreview;
+  const cardType = props.cardType;
   const onHover = props.onHover;
 
-  const offerLink = AppRoute.Offer.replace(':id', id);
+  const offerLink = AppRoute.Offer.replace(':offerId', id);
+  const additionalClasses = getOfferCardMediumClasses(cardType);
+
+  const handleMouseEnter = () => {
+    onHover?.(props.offerPreview);
+  };
+  const handleMouseLeave = () => {
+    onHover?.(null);
+  };
 
   return (
     <article
-      className="cities__card place-card"
-      onMouseEnter={() => onHover(props.offerPreview)}
-      onMouseLeave={() => onHover(null)}
+      className={additionalClasses.articleClass}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={additionalClasses.imgWrapperClass}>
         <Link to={offerLink}>
           <img
             className="place-card__image"

@@ -1,5 +1,5 @@
 import { City } from '../../types/city';
-import { getCitiesNames } from '../../utils';
+import { getCitiesNames } from '../../utils/city-utils';
 import NavigationItem from './navigation-item';
 
 type NavigationProps = {
@@ -17,7 +17,11 @@ function Navigation(props: NavigationProps): JSX.Element {
         <section className="locations container">
           <ul className="locations__list tabs__list">
             {citiesNames.map((cityName) => (
-              <NavigationItem key={cityName} title={cityName} currentCity={currentCity}/>
+              <NavigationItem
+                key={cityName}
+                title={cityName}
+                currentCity={currentCity}
+              />
             ))}
           </ul>
         </section>

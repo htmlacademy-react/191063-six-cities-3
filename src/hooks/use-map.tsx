@@ -2,7 +2,15 @@ import { useEffect, useState, useRef } from 'react';
 import { City } from '../types/city';
 import leaflet from 'leaflet';
 
-function useMap(mapRef: React.RefObject<HTMLElement | null>, city: City): leaflet.Map | null {
+const mapStyle =
+  'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+const mapCopyright =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
+function useMap(
+  mapRef: React.RefObject<HTMLElement | null>,
+  city: City
+): leaflet.Map | null {
   const [map, setMap] = useState<leaflet.Map | null>(null);
   const isRenderedRef = useRef(false);
 
@@ -17,13 +25,9 @@ function useMap(mapRef: React.RefObject<HTMLElement | null>, city: City): leafle
       });
 
       leaflet
-        .tileLayer(
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-          {
-            attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          }
-        )
+        .tileLayer(mapStyle, {
+          attribution: mapCopyright,
+        })
         .addTo(instance);
 
       setMap(instance);

@@ -19,7 +19,7 @@ type OfferPreview = OfferBase & {
   previewImage: string;
 };
 
-type Offer = OfferBase & {
+type OfferFull = OfferBase & {
   description: string;
   bedrooms: number;
   goods: string[];
@@ -28,4 +28,4 @@ type Offer = OfferBase & {
   maxAdults: number;
 };
 
-export type { OfferPreview, Offer };
+export type { OfferPreview, OfferFull };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ReviewChangeHandler } from '../../types/review';
-import { MIN_REVIEW_LENGTH, RATING_TYPES } from '../../const';
+import { MIN_REVIEW_LENGTH, RatingType } from '../../const';
 import ReviewRatingStar from './review-rating-star';
 
 function ReviewForm(): JSX.Element {
@@ -20,7 +20,7 @@ function ReviewForm(): JSX.Element {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {RATING_TYPES.map(({ value, title }) => (
+        {Object.values(RatingType).map(({ value, title }) => (
           <ReviewRatingStar
             key={value}
             value={value}
