@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { getRatingWidth } from '../../utils/offer-utils';
+import { MAX_NEAR_OFFERS_COUNT } from '../../const/offer-const';
+import { getRatingStyles } from '../../utils/offer-utils';
 import {
   fullOfferActions,
   fullOfferSelectors,
 } from '../../store/slices/full-offer-slice/full-offer-slice';
-import { NEAR_OFFERS_COUNT } from '../../const/offer-const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import Header from '../../components/header';
@@ -30,19 +30,19 @@ function OfferPage(): JSX.Element {
   const reviews = useAppSelector(fullOfferSelectors.selectReviews);
   const nearOfferPreviews = useAppSelector(
     fullOfferSelectors.selectNearOfferPreviews
-  ).slice(0, NEAR_OFFERS_COUNT);
+  ).slice(0, MAX_NEAR_OFFERS_COUNT);
   const isLoading = useAppSelector(fullOfferSelectors.selectIsLoading);
   const isFailed = useAppSelector(fullOfferSelectors.selectIsFailed);
   const dispatch = useAppDispatch();
   const { offerId } = useParams();
 
   useEffect(() => {
-    if (offerId && offerFull?.id !== offerId) {
+    if (offerId) {
       dispatch(fullOfferActions.getOfferFull(offerId));
       dispatch(fullOfferActions.getReviews(offerId));
       dispatch(fullOfferActions.getNearOfferPreviews(offerId));
     }
-  }, [dispatch, offerId, offerFull]);
+  }, [dispatch, offerId]);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -68,9 +68,11 @@ function OfferPage(): JSX.Element {
     title,
     type,
   } = offerFull;
+  const ratingStyles = getRatingStyles(rating);
+
 
   return (
-    <div className="page">
+    <div className="page" data-testid="offer-page-test-id">
       <Helmet>
         <title>6 Cities. Offer</title>
       </Helmet>
@@ -95,7 +97,7 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: getRatingWidth(rating) }} />
+                  <span style={ratingStyles} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">

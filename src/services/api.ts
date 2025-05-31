@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { StatusCodes } from 'http-status-codes';
 import { getToken } from './token';
 
-const BASE_URL = 'https://15.design.htmlacademy.pro/six-cities';
+const BASE_URL = 'https://16.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
 
 type DetailMessageType = {

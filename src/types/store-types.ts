@@ -1,3 +1,4 @@
+import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import { SortOptionType } from '../components/sort/types';
 import { NameSpace } from '../const/store-const';
 import { store } from '../store';
@@ -7,8 +8,11 @@ import { Values } from './common-types';
 import { OfferFull, OfferPreviews } from './offer-types';
 import { Reviews } from './review-types';
 import { CurrentUser } from './user-types';
+import { createAPI } from '../services/api';
 
 export type AppDispatch = typeof store.dispatch;
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 export type State = ReturnType<typeof store.getState>;
 

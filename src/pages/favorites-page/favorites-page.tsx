@@ -15,7 +15,7 @@ function FavoritesPage(): JSX.Element {
   const mainAddClass = isFavoriteEmpty ? ' page__main--favorites-empty' : '';
 
   return (
-    <div className={`page${pageAddClass}`}>
+    <div className={`page${pageAddClass}`} data-testid="favorite-page-test-id">
       <Helmet>
         <title>6 Cities. Favorites</title>
       </Helmet>

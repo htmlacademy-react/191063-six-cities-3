@@ -4,12 +4,16 @@ import { AuthorizationStatus, RequestStatus } from '../../../const/api-const';
 import { NameSpace } from '../../../const/store-const';
 import { dropToken, saveToken } from '../../../services/token';
 import { checkAuth, login, logout } from './async-actions';
-import { selectCurrentUser, selectIsUserLoggedIn } from './selectors';
+import {
+  selectCurrentUser,
+  selectIsUserLoggedIn,
+  selectAuthRequestStatus,
+} from './selectors';
 
 const initialState: UserSlice = {
+  currentUser: null,
   authStatus: AuthorizationStatus.Unknown,
   authRequestStatus: RequestStatus.Idle,
-  currentUser: null,
 };
 
 const userSlice = createSlice({
@@ -36,6 +40,7 @@ const userSlice = createSlice({
         state.authRequestStatus = RequestStatus.Success;
       })
       .addCase(login.rejected, (state) => {
+        state.currentUser = null;
         state.authStatus = AuthorizationStatus.NoAuth;
         state.authRequestStatus = RequestStatus.Failed;
       })
@@ -51,4 +56,8 @@ export const userReducer = userSlice.reducer;
 
 export const userActions = { checkAuth, login, logout };
 
-export const userSelectors = { selectIsUserLoggedIn, selectCurrentUser };
+export const userSelectors = {
+  selectIsUserLoggedIn,
+  selectCurrentUser,
+  selectAuthRequestStatus,
+};

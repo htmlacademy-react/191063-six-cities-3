@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { OfferPreview } from '../../types/offer-types';
 import { AppRoute } from '../../const/app-const';
 import { getCapitalizedString } from '../../utils/common-utils';
-import { getRatingWidth } from '../../utils/offer-utils';
+import { getRatingStyles } from '../../utils/offer-utils';
 import {
   getCardImageSize,
   getOfferCardClasses,
@@ -11,7 +11,7 @@ import {
 } from './offer-card-utils';
 import FavoriteButton from '../favorite-button';
 
-type OfferCardComponentProps = {
+export type OfferCardComponentProps = {
   cardType: OfferCardType;
   offerPreview: OfferPreview;
   onHover?: (hoveredOffer: OfferPreview | null) => void;
@@ -34,6 +34,7 @@ function OfferCardComponent(props: OfferCardComponentProps): JSX.Element {
   const offerLink = AppRoute.Offer.replace(':offerId', id);
   const classes = getOfferCardClasses(cardType);
   const imageSize = getCardImageSize(cardType);
+  const ratingStyles = getRatingStyles(rating);
 
   const handleMouseEnter = () => {
     onHover?.(props.offerPreview);
@@ -79,7 +80,7 @@ function OfferCardComponent(props: OfferCardComponentProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: getRatingWidth(rating) }}></span>
+            <span style={ratingStyles}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

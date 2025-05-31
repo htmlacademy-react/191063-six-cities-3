@@ -49,9 +49,10 @@ function SortComponent(): JSX.Element {
       method="get"
       onClick={handleFormToggle}
       ref={dropdownRef}
+      data-testid="sort-form-test-id"
     >
       <span className="places__sorting-caption">Sort by </span>
-      <span className="places__sorting-type" tabIndex={0}>
+      <span className="places__sorting-type" data-testid="current-sort-option-test-id" tabIndex={0}>
         {SortOptionLabel[currentSortOption]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>

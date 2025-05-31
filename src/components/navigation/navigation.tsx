@@ -12,10 +12,7 @@ function Navigation(): JSX.Element {
         <section className="locations container">
           <ul className="locations__list tabs__list">
             {cities.map((city) => (
-              <NavigationItem
-                key={city.name}
-                itemCity={city}
-              />
+              <NavigationItem key={city.name} itemCity={city} />
             ))}
           </ul>
         </section>

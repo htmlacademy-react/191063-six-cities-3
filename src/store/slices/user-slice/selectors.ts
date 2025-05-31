@@ -14,3 +14,8 @@ export const selectCurrentUser = createSelector(
   selectSelf,
   (state) => state.currentUser
 );
+
+export const selectAuthRequestStatus = createSelector(
+  selectSelf,
+  (state) => state.authRequestStatus
+);

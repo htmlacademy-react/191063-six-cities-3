@@ -1,19 +1,10 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const/app-const';
+import Logo from '../logo';
 
 function FooterComponent(): JSX.Element {
   return (
-    <footer className="footer container">
-      <Link className="footer__logo-link" to={AppRoute.Root}>
-        <img
-          className="footer__logo"
-          src="img/logo.svg"
-          alt="6 cities logo"
-          width={64}
-          height={33}
-        />
-      </Link>
+    <footer className="footer container" data-testid="footer-test-id">
+      <Logo logoType='Footer' />
     </footer>
   );
 }
