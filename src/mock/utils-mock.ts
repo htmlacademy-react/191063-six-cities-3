@@ -1,4 +1,4 @@
-import { OfferPreview } from '../types/offer';
+import { OfferPreview, OfferPreviews } from '../types/offer';
 import { NEAR_OFFERS_COUNT } from '../const';
 import { getMockOfferPreviews } from './offer-previews-mock';
 
@@ -6,7 +6,7 @@ const mockOfferPreviews = getMockOfferPreviews();
 
 function getMockNearOfferPreviews(
   currentOfferPreview: OfferPreview
-): OfferPreview[] {
+): OfferPreviews {
   return mockOfferPreviews
     .filter(
       (offerPreview) =>

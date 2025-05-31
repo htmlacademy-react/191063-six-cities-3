@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { OfferPreview } from '../../types/offer';
+import { OfferPreview, OfferPreviews } from '../../types/offer';
 import { City } from '../../types/city';
 import { Page } from '../../types/page';
 import { getMapClasses } from './map-utils';
@@ -11,7 +11,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   pageType: Page;
   city: City;
-  offerPreviews: OfferPreview[];
+  offerPreviews: OfferPreviews;
   hoveredOffer: OfferPreview | null;
 };
 

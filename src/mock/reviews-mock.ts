@@ -8,6 +8,8 @@ const mockReviews: Review[] = [
     date: new Date('2025-02-10T21:00:00.468Z'),
     rating: 5,
     user: {
+      email: 'test1@mail.com',
+      token: '',
       name: 'Mollie',
       avatarUrl: 'https://16.design.htmlacademy.pro/static/avatar/6.jpg',
       isPro: false,
@@ -20,6 +22,8 @@ const mockReviews: Review[] = [
     date: new Date('2025-02-07T21:00:00.468Z'),
     rating: 2,
     user: {
+      email: 'test2@mail.com',
+      token: '',
       name: 'Jack',
       avatarUrl: 'https://16.design.htmlacademy.pro/static/avatar/7.jpg',
       isPro: true,

@@ -1,6 +1,6 @@
-import { OfferPreview } from '../types/offer';
+import { OfferPreviews } from '../types/offer';
 
-const mockOfferPreviews: OfferPreview[] = [
+const mockOfferPreviews: OfferPreviews = [
   // {
   //   id: '89b6ae84-2724-4369-ab85-6877dbdd2795',
   //   title: 'Perfectly located Castro',
@@ -2763,7 +2763,7 @@ const mockOfferPreviews: OfferPreview[] = [
   },
 ];
 
-function getMockOfferPreviews(offersCount?: number): OfferPreview[] {
+function getMockOfferPreviews(offersCount?: number): OfferPreviews {
   if (offersCount && offersCount < mockOfferPreviews.length) {
     return mockOfferPreviews.slice(0, offersCount);
   }
