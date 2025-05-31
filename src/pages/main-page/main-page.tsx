@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import { offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import { RequestStatus } from '../../const/api-const';
-import Header from '../../components/header';
-import Navigation from '../../components/navigation';
+import MainOffersEmpty from '../../components/main-offers-empty';
 import useAppSelector from '../../hooks/use-app-selector';
 import LoadingPage from '../loading-page';
 import MainOffers from '../../components/main-offers';
-import MainOffersEmpty from '../../components/main-offers-empty';
+import Navigation from '../../components/navigation';
+import Header from '../../components/header';
 
 function MainPage(): JSX.Element {
   const offerPreviews = useAppSelector(offersSelectors.selectMainOffers);

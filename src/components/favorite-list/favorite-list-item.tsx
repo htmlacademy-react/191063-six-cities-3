@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, CITIES } from '../../const/app-const';
+import { AppRoute, Cities } from '../../const/app-const';
 import { offersActions } from '../../store/slices/offers-slice/offers-slice';
 import { OfferPreviews } from '../../types/offer-types';
 import { CityName } from '../../types/app-types';
@@ -16,7 +16,7 @@ function FavoriteListItem(props: FavoriteListItemProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCityClick = () => {
-    dispatch(offersActions.setCity(CITIES[cityName]));
+    dispatch(offersActions.setCity(Cities[cityName]));
   };
 
   return (

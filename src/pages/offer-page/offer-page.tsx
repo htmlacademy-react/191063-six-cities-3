@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { MAX_NEAR_OFFERS_COUNT } from '../../const/offer-const';
 import { getRatingStyles } from '../../utils/offer-utils';
@@ -7,20 +7,20 @@ import {
   fullOfferActions,
   fullOfferSelectors,
 } from '../../store/slices/full-offer-slice/full-offer-slice';
+import OfferPreviewList from '../../components/offer-preview-list';
+import FavoriteButton from '../../components/favorite-button';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import Header from '../../components/header';
-import OfferGallery from '../../components/offer-gallery';
 import OfferFeatures from '../../components/offer-features';
-import OfferInside from '../../components/offer-inside';
-import OfferHost from '../../components/offer-host';
+import OfferGallery from '../../components/offer-gallery';
 import OfferReviews from '../../components/offer-reviews';
-import OfferPreviewList from '../../components/offer-preview-list';
-import Map from '../../components/map';
+import OfferInside from '../../components/offer-inside';
 import NotFoundPage from '../not-found-page';
 import LoadingPage from '../loading-page';
 import ReviewForm from '../../components/review-form';
-import FavoriteButton from '../../components/favorite-button';
+import OfferHost from '../../components/offer-host';
+import Header from '../../components/header';
+import Map from '../../components/map';
 
 function OfferPage(): JSX.Element {
   const offerFull = useAppSelector(fullOfferSelectors.selectOfferFull);

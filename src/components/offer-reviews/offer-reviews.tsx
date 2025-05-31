@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { Review } from '../../types/review-types';
 import { userSelectors } from '../../store/slices/user-slice/user-slice';
+import { Review } from '../../types/review-types';
 import OfferReviewItem from './offer-review-item';
 import useAppSelector from '../../hooks/use-app-selector';
 

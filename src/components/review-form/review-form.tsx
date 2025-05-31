@@ -1,17 +1,15 @@
 import { FormEvent, useState } from 'react';
-import { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
-import { ReviewChangeHandler } from '../../types/review-types';
 import { MAN_REVIEW_LENGTH, MIN_REVIEW_LENGTH } from '../../const/review-const';
+import { ReviewChangeHandler } from '../../types/review-types';
 import { RequestStatus } from '../../const/api-const';
 import { RatingOption } from '../../const/app-const';
 import {
-  fullOfferActions,
   fullOfferSelectors,
+  fullOfferActions,
 } from '../../store/slices/full-offer-slice/full-offer-slice';
+import ReviewRatingStar from './review-rating-star';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import ReviewRatingStar from './review-rating-star';
 
 type ReviewFormProps = {
   offerId: string;
@@ -23,14 +21,15 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
   const postReviewStatus = useAppSelector(
     fullOfferSelectors.selectPostReviewStatus
   );
-  const [review, setReview] = useState({
+  const initialReview = {
     comment: '',
     rating: 0,
-  });
+  };
+  const [review, setReview] = useState(initialReview);
 
-  const disabledInputs = postReviewStatus === RequestStatus.Loading;
+  const isInputsDisabled = postReviewStatus === RequestStatus.Loading;
 
-  const disabledForm =
+  const isFormDisabled =
     !review.rating ||
     review.comment.length < MIN_REVIEW_LENGTH ||
     review.comment.length > MAN_REVIEW_LENGTH ||
@@ -46,20 +45,14 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
     setReview({ ...review, [name]: Number(value) });
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     const form = evt.currentTarget;
     evt.preventDefault();
     dispatch(fullOfferActions.postReview({ offerId, review }))
       .unwrap()
       .then(() => {
         form.reset();
-        setReview({
-          comment: '',
-          rating: 0,
-        });
-      })
-      .catch((error: AxiosError) => {
-        toast.warn(error.message);
+        setReview(initialReview);
       });
   };
 
@@ -68,7 +61,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
       className="reviews__form form"
       data-testid="review-form-test-id"
       action=""
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="comment">
         Your review
@@ -79,7 +72,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
             key={value}
             value={value}
             title={title}
-            disabled={disabledInputs}
+            disabled={isInputsDisabled}
             onChange={handleRatingChange}
           />
         ))}
@@ -90,7 +83,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         defaultValue={review.comment}
-        disabled={disabledInputs}
+        disabled={isInputsDisabled}
         onChange={handleCommentChange}
       />
       <div className="reviews__button-wrapper">
@@ -104,7 +97,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={disabledForm}
+          disabled={isFormDisabled}
         >
           Submit
         </button>

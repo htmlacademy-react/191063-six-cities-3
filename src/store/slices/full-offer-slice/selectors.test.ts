@@ -1,11 +1,11 @@
 import { fullOfferSelectors } from './full-offer-slice';
 import { RequestStatus } from '../../../const/api-const';
-import { NameSpace } from '../../../const/store-const';
+import { Namespace } from '../../../const/store-const';
 import { State } from '../../../types/store-types';
 import {
-  getMockOfferFull,
   getMockOfferFullPreview,
   getMockOfferPreviews,
+  getMockOfferFull,
   getMockReviews,
 } from '../../../utils/mock-utils';
 
@@ -14,7 +14,7 @@ describe('Full Offer selectors', () => {
   const mockNearOfferPreviews = getMockOfferPreviews();
   const mockReviews = getMockReviews();
   const state = {
-    [NameSpace.FullOffer]: {
+    [Namespace.FullOffer]: {
       offerFull: mockOfferFull,
       offerFullStatus: RequestStatus.Idle,
       nearOfferPreviews: mockNearOfferPreviews,
@@ -23,68 +23,68 @@ describe('Full Offer selectors', () => {
       reviewsStatus: RequestStatus.Idle,
       postReviewStatus: RequestStatus.Idle,
     },
-    [NameSpace.Offers]: {
+    [Namespace.Offers]: {
       offerPreviews: [getMockOfferFullPreview()],
       offerPreviewsStatus: RequestStatus.Idle,
     },
   };
 
   it('should return offerFull from state', () => {
-    const { offerFull } = state[NameSpace.FullOffer];
+    const { offerFull } = state[Namespace.FullOffer];
     const result = fullOfferSelectors.selectOfferFull(state as State);
     expect(result).toEqual(offerFull);
   });
 
   it('should return offerFullStatus from state', () => {
-    const { offerFullStatus } = state[NameSpace.FullOffer];
+    const { offerFullStatus } = state[Namespace.FullOffer];
     const result = fullOfferSelectors.selectOfferFullStatus(state as State);
     expect(result).toEqual(offerFullStatus);
   });
 
   it('should return nearOfferPreviews from state', () => {
-    const { nearOfferPreviews } = state[NameSpace.FullOffer];
+    const { nearOfferPreviews } = state[Namespace.FullOffer];
     const result = fullOfferSelectors.selectNearOfferPreviews(state as State);
     expect(result).toEqual(nearOfferPreviews);
   });
 
   it('should return nearOfferPreviewsStatus from state', () => {
-    const { nearOfferPreviewsStatus } = state[NameSpace.FullOffer];
+    const { nearOfferPreviewsStatus } = state[Namespace.FullOffer];
     const result = fullOfferSelectors.selectNearOfferPreviewsStatus(state as State);
     expect(result).toEqual(nearOfferPreviewsStatus);
   });
 
   it('should return reviewsStatus from state', () => {
-    const { reviewsStatus } = state[NameSpace.FullOffer];
+    const { reviewsStatus } = state[Namespace.FullOffer];
     const result = fullOfferSelectors.selectReviewsStatus(state as State);
     expect(result).toEqual(reviewsStatus);
   });
 
   it('should return postReviewStatus from state', () => {
-    const { postReviewStatus } = state[NameSpace.FullOffer];
+    const { postReviewStatus } = state[Namespace.FullOffer];
     const result = fullOfferSelectors.selectPostReviewStatus(state as State);
     expect(result).toEqual(postReviewStatus);
   });
 
   it('should return currentOfferPreview from state', () => {
-    const { offerPreviews } = state[NameSpace.Offers];
+    const { offerPreviews } = state[Namespace.Offers];
     const result = fullOfferSelectors.selectCurrentOfferPreview(state as State);
     expect(result).toEqual(offerPreviews[0]);
   });
 
   it('should return isLoading from state', () => {
     const initialState = {
-      [NameSpace.FullOffer]: {
+      [Namespace.FullOffer]: {
         offerFullStatus: RequestStatus.Loading,
         nearOfferPreviewsStatus: RequestStatus.Loading,
         reviewsStatus: RequestStatus.Loading,
       },
-      [NameSpace.Offers]: {
+      [Namespace.Offers]: {
         offerPreviewsStatus: RequestStatus.Loading,
       },
     };
     const { offerFullStatus, nearOfferPreviewsStatus, reviewsStatus } =
-      initialState[NameSpace.FullOffer];
-    const { offerPreviewsStatus } = initialState[NameSpace.Offers];
+      initialState[Namespace.FullOffer];
+    const { offerPreviewsStatus } = initialState[Namespace.Offers];
 
     const result = fullOfferSelectors.selectIsLoading(initialState as State);
     const isLoading =
@@ -98,18 +98,18 @@ describe('Full Offer selectors', () => {
 
   it('should return isFailed from state', () => {
     const initialState = {
-      [NameSpace.FullOffer]: {
+      [Namespace.FullOffer]: {
         offerFullStatus: RequestStatus.Failed,
         nearOfferPreviewsStatus: RequestStatus.Failed,
         reviewsStatus: RequestStatus.Failed,
       },
-      [NameSpace.Offers]: {
+      [Namespace.Offers]: {
         offerPreviewsStatus: RequestStatus.Failed,
       },
     };
     const { offerFullStatus, nearOfferPreviewsStatus, reviewsStatus } =
-      initialState[NameSpace.FullOffer];
-    const { offerPreviewsStatus } = initialState[NameSpace.Offers];
+      initialState[Namespace.FullOffer];
+    const { offerPreviewsStatus } = initialState[Namespace.Offers];
 
     const result = fullOfferSelectors.selectIsFailed(initialState as State);
     const isFailed =

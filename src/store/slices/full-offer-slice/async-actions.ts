@@ -1,6 +1,6 @@
+import { NewReview, Review, Reviews } from '../../../types/review-types';
 import { OfferFull, OfferPreviews } from '../../../types/offer-types';
 import { APIRoute } from '../../../const/api-const';
-import { NewReview, Review, Reviews } from '../../../types/review-types';
 import createAppAsyncThunk from '../../create-app-async-thunk';
 
 export const getOfferFull = createAppAsyncThunk<

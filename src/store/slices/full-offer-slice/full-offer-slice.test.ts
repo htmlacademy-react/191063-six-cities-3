@@ -1,13 +1,13 @@
-import { RequestStatus } from '../../../const/api-const';
+import { fullOfferActions, fullOfferReducer } from './full-offer-slice';
 import { NewReview, Review } from '../../../types/review-types';
+import { RequestStatus } from '../../../const/api-const';
+import { offersActions } from '../offers-slice/offers-slice';
 import {
-  getMockOfferFull,
   getMockOfferFullPreview,
   getMockOfferPreviews,
+  getMockOfferFull,
   getMockReviews,
 } from '../../../utils/mock-utils';
-import { offersActions } from '../offers-slice/offers-slice';
-import { fullOfferActions, fullOfferReducer } from './full-offer-slice';
 
 describe('Full Offer Slice', () => {
   it('should return initial state with empty action', () => {
@@ -150,7 +150,6 @@ describe('Full Offer Slice', () => {
         fullOfferActions.getNearOfferPreviews.fulfilled(
           mockOfferPreviews,
           '',
-          '',
           ''
         )
       );
@@ -212,7 +211,7 @@ describe('Full Offer Slice', () => {
 
       const result = fullOfferReducer(
         undefined,
-        fullOfferActions.getReviews.fulfilled(mockReviews, '', '', '')
+        fullOfferActions.getReviews.fulfilled(mockReviews, '', '')
       );
 
       expect(result).toEqual(expectedState);
@@ -282,8 +281,7 @@ describe('Full Offer Slice', () => {
           {
             offerId: 'q1w2e3',
             review: mockNewReview,
-          },
-          ''
+          }
         )
       );
 

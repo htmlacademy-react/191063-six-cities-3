@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../../const/api-const';
-import { NameSpace } from '../../../const/store-const';
+import { Namespace } from '../../../const/store-const';
 import { State } from '../../../types/store-types';
 
-const selectSelf = (state: State) => state[NameSpace.User];
+const selectSelf = (state: State) => state[Namespace.User];
 
 export const selectIsUserLoggedIn = createSelector(
   selectSelf,

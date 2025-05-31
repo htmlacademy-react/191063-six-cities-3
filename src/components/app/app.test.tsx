@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { withStore } from '../../utils/mock-components';
 import { getMockAppStore, getMockCurrentUser } from '../../utils/mock-utils';
 import { AuthorizationStatus, RequestStatus } from '../../const/api-const';
+import { withStore } from '../../utils/mock-components';
 import { UserSlice } from '../../types/store-types';
 import { AppRoute } from '../../const/app-const';
 import App from './app';

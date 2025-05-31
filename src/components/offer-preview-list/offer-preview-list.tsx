@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { OfferPreview, OfferPreviews } from '../../types/offer-types';
+import { OfferCardType } from '../offer-card/offer-card-utils';
 import {
   getOfferPreviewListClasses,
   OfferPreviewListType,
 } from './offer-preview-list-utils';
-import { OfferCardType } from '../offer-card/offer-card-utils';
 import OfferCard from '../offer-card';
 
 export type OfferPreviewListComponentProps = {

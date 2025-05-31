@@ -1,6 +1,6 @@
 import { AppRoute, DateFormat } from '../const/app-const';
-import { Values } from './common-types';
 import { AppLocation } from './location-types';
+import { Values } from './common-types';
 
 export type AppRouteType = Values<typeof AppRoute>;
 

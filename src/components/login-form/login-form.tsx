@@ -1,8 +1,6 @@
 import { FormEvent, ReactEventHandler, useRef, useState } from 'react';
-import { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
-import { MIN_PASSWORD_LENGTH } from '../../const/app-const';
 import { userActions, userSelectors } from '../../store/slices/user-slice/user-slice';
+import { MIN_PASSWORD_LENGTH } from '../../const/app-const';
 import { RequestStatus } from '../../const/api-const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
@@ -15,14 +13,15 @@ function LoginForm(): JSX.Element {
   const authRequestStatus = useAppSelector(
     userSelectors.selectAuthRequestStatus
   );
-  const [authData, setAuthData] = useState({
+  const initialAuthData = {
     email: '',
     password: '',
-  });
+  };
+  const [authData, setAuthData] = useState(initialAuthData);
 
-  const disabledInputs = authRequestStatus === RequestStatus.Loading;
+  const isInputsDisabled = authRequestStatus === RequestStatus.Loading;
 
-  const disabledForm =
+  const isFormDisabled =
     !emailRef.current?.validity.valid ||
     authData.password.length < MIN_PASSWORD_LENGTH ||
     authRequestStatus === RequestStatus.Loading;
@@ -32,7 +31,7 @@ function LoginForm(): JSX.Element {
     setAuthData({ ...authData, [name]: value });
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const form = evt.currentTarget;
 
@@ -45,13 +44,7 @@ function LoginForm(): JSX.Element {
         .unwrap()
         .then(() => {
           form.reset();
-          setAuthData({
-            email: '',
-            password: '',
-          });
-        })
-        .catch((error: AxiosError) => {
-          toast.warn(error.message);
+          setAuthData(initialAuthData);
         });
     }
   };
@@ -59,7 +52,7 @@ function LoginForm(): JSX.Element {
   return (
     <form
       className="login__form form"
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
     >
       <div className="login__input-wrapper form__input-wrapper">
         <label className="visually-hidden">E-mail</label>
@@ -72,7 +65,7 @@ function LoginForm(): JSX.Element {
           data-testid="email-input-test-id"
           required
           onChange={handleAuthDataChange}
-          disabled={disabledInputs}
+          disabled={isInputsDisabled}
         />
       </div>
       <div className="login__input-wrapper form__input-wrapper">
@@ -86,13 +79,13 @@ function LoginForm(): JSX.Element {
           required
           minLength={MIN_PASSWORD_LENGTH}
           onChange={handleAuthDataChange}
-          disabled={disabledInputs}
+          disabled={isInputsDisabled}
         />
       </div>
       <button
         className="login__submit form__submit button"
         type="submit"
-        disabled={disabledForm}
+        disabled={isFormDisabled}
       >
         Sign in
       </button>

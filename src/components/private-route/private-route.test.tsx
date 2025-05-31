@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
 import { getMockAppStore, getMockCurrentUser } from '../../utils/mock-utils';
 import { AuthorizationStatus, RequestStatus } from '../../const/api-const';
 import { withProviders, withStore } from '../../utils/mock-components';

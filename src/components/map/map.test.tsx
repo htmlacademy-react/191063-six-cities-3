@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { withProviders, withStore } from '../../utils/mock-components';
 import { getMockAppStore, getMockOfferPreviews } from '../../utils/mock-utils';
-import { CITIES } from '../../const/app-const';
+import { withProviders, withStore } from '../../utils/mock-components';
 import Map, { MapProps } from './map';
+import { Cities } from '../../const/app-const';
 
 describe('Component: Map', () => {
   const mockOffers = getMockOfferPreviews();
@@ -12,7 +12,7 @@ describe('Component: Map', () => {
   it('should render correctly with offers', () => {
     const props: MapProps = {
       pageType: 'Main',
-      city: CITIES.Paris,
+      city: Cities.Paris,
       offerPreviews: mockOffers,
       hoveredOffer: null,
     };
@@ -28,7 +28,7 @@ describe('Component: Map', () => {
   it('should render correctly with empty offers array', () => {
     const props: MapProps = {
       pageType: 'Main',
-      city: CITIES.Paris,
+      city: Cities.Paris,
       offerPreviews: [],
       hoveredOffer: null,
     };
@@ -45,7 +45,7 @@ describe('Component: Map', () => {
     const selectedOfferId = mockOffers[0];
     const props: MapProps = {
       pageType: 'Main',
-      city: CITIES.Paris,
+      city: Cities.Paris,
       offerPreviews: mockOffers,
       hoveredOffer: selectedOfferId,
     };
@@ -61,7 +61,7 @@ describe('Component: Map', () => {
   it('should render with different page types', () => {
     const props: MapProps = {
       pageType: 'Offer',
-      city: CITIES.Paris,
+      city: Cities.Paris,
       offerPreviews: mockOffers,
       hoveredOffer: null,
     };

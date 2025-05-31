@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { getMockAppStore, getMockOfferPreviews } from '../../utils/mock-utils';
-import { withProviders, withStore } from '../../utils/mock-components';
 import OfferCard, { OfferCardComponentProps } from './offer-card';
+import { withProviders, withStore } from '../../utils/mock-components';
 
 describe('Component: OfferCard', () => {
   const mockOfferPreview = getMockOfferPreviews()[0];

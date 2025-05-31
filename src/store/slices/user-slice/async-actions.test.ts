@@ -2,11 +2,11 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from 'redux';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
+import { APIRoute, AuthorizationStatus, RequestStatus } from '../../../const/api-const';
 import { extractActionsTypes, getMockCurrentUser } from '../../../utils/mock-utils';
 import { AppThunkDispatch, State } from '../../../types/store-types';
-import { APIRoute, AuthorizationStatus, RequestStatus } from '../../../const/api-const';
-import { createAPI } from '../../../services/api';
 import { userActions } from './user-slice';
+import { createAPI } from '../../../services/api';
 
 describe('User slice async actions', () => {
   const axios = createAPI();

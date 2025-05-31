@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
-import { offersActions } from '../../store/slices/offers-slice/offers-slice';
+import { offersActions, offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import { userSelectors } from '../../store/slices/user-slice/user-slice';
 import { AppRoute } from '../../const/app-const';
 import {
-  FavoriteButtonType,
   getFavoriteButtonClasses,
   getFavoriteButtonSize,
+  FavoriteButtonType,
 } from './favorite-button-utils';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
@@ -21,6 +19,7 @@ type FavoriteButtonProps = {
 function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   const { buttonType, offerId, isFavorite } = props;
   const isLoggedIn = useAppSelector(userSelectors.selectIsUserLoggedIn);
+  const isDisabled = useAppSelector(offersSelectors.selectIsUpdateFavoriteLoading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const classes = getFavoriteButtonClasses(buttonType);
@@ -35,11 +34,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
       dispatch(offersActions.updateFavoriteOffer({
         offerId,
         status: Number(!isFavorite)
-      }))
-        .unwrap()
-        .catch((error: AxiosError) => {
-          toast.warn(error.message);
-        });
+      }));
     }
   };
 
@@ -48,6 +43,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
       className={`${classes.buttonClass} ${activeClass}`}
       type="button"
       onClick={handleFavoriteClick}
+      disabled={isDisabled}
     >
       <svg
         className={classes.svgClass}

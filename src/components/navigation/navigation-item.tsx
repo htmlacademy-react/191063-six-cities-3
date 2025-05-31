@@ -1,5 +1,5 @@
-import { City } from '../../types/app-types';
 import { offersActions, offersSelectors } from '../../store/slices/offers-slice/offers-slice';
+import { City } from '../../types/app-types';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 
@@ -11,7 +11,7 @@ function NavigationItem(props: NavigationItemProps): JSX.Element {
   const { itemCity } = props;
   const currentCity = useAppSelector(offersSelectors.selectCity);
   const activeClass =
-    itemCity.name === currentCity.name ? ' tabs__item--active' : '';
+    itemCity.name === currentCity.name ? 'tabs__item--active' : '';
   const dispatch = useAppDispatch();
 
   const handleItemClick = () => {
@@ -21,7 +21,7 @@ function NavigationItem(props: NavigationItemProps): JSX.Element {
   return (
     <li className="locations__item">
       <a
-        className={`locations__item-link tabs__item${activeClass}`}
+        className={`locations__item-link tabs__item ${activeClass}`}
         onClick={handleItemClick}
       >
         <span>{itemCity.name}</span>

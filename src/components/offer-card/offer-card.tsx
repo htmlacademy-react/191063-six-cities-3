@@ -1,12 +1,12 @@
-import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { OfferPreview } from '../../types/offer-types';
-import { AppRoute } from '../../const/app-const';
+import { memo } from 'react';
 import { getCapitalizedString } from '../../utils/common-utils';
 import { getRatingStyles } from '../../utils/offer-utils';
+import { OfferPreview } from '../../types/offer-types';
+import { AppRoute } from '../../const/app-const';
 import {
-  getCardImageSize,
   getOfferCardClasses,
+  getCardImageSize,
   OfferCardType,
 } from './offer-card-utils';
 import FavoriteButton from '../favorite-button';

@@ -21,7 +21,7 @@ export const DateFormat = {
   Review: 'MMMM YYYY',
 } as const;
 
-export const CITIES: Record<CityName, City> = {
+export const Cities: Record<CityName, City> = {
   Paris: {
     name: 'Paris',
     location: {

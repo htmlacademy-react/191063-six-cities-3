@@ -8,34 +8,37 @@ import thunk from 'redux-thunk';
 import { AppThunkDispatch, State } from '../types/store-types';
 import { createAPI } from '../services/api';
 
-
-export const withProviders = (component: JSX.Element) => (
-  <HelmetProvider>
-    <BrowserRouter>
-      {component}
-    </BrowserRouter>
-  </HelmetProvider>
-);
+export function withProviders(component: JSX.Element) {
+  return (
+    <HelmetProvider>
+      <BrowserRouter>{component}</BrowserRouter>
+    </HelmetProvider>
+  );
+}
 
 type ComponentWithMockStore = {
   withStoreComponent: JSX.Element;
   mockStore: MockStore;
   mockAxiosAdapter: MockAdapter;
-}
+};
 
-export const withStore = (
+export function withStore (
   component: JSX.Element,
-  initialState: Partial<State> = {},
-): ComponentWithMockStore => {
+  initialState: Partial<State> = {}
+): ComponentWithMockStore {
   const axios = createAPI();
   const mockAxiosAdapter = new MockAdapter(axios);
   const middleware = [thunk.withExtraArgument(axios)];
-  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
+  const mockStoreCreator = configureMockStore<
+    State,
+    Action<string>,
+    AppThunkDispatch
+  >(middleware);
   const mockStore = mockStoreCreator(initialState);
 
-  return ({
+  return {
     withStoreComponent: <Provider store={mockStore}>{component}</Provider>,
     mockStore,
     mockAxiosAdapter,
-  });
-};
+  };
+}

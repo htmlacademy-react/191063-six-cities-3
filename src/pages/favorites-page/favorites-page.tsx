@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import useAppSelector from '../../hooks/use-app-selector';
-import Header from '../../components/header';
-import FavoriteList from '../../components/favorite-list';
-import Footer from '../../components/footer';
 import FavoriteEmpty from '../../components/favorite-empty';
+import FavoriteList from '../../components/favorite-list';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
 
 function FavoritesPage(): JSX.Element {
   const favoriteOfferPreviews = useAppSelector(

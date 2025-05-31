@@ -2,11 +2,16 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from 'redux';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
-import { extractActionsTypes, getMockOfferFull, getMockOfferPreviews, getMockReviews } from '../../../utils/mock-utils';
 import { AppThunkDispatch, State } from '../../../types/store-types';
 import { APIRoute, RequestStatus } from '../../../const/api-const';
 import { fullOfferActions } from './full-offer-slice';
 import { createAPI } from '../../../services/api';
+import {
+  getMockOfferPreviews,
+  extractActionsTypes,
+  getMockOfferFull,
+  getMockReviews
+} from '../../../utils/mock-utils';
 
 describe('Full Offer slice async actions', () => {
   const axios = createAPI();

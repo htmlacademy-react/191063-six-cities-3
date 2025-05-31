@@ -9,7 +9,7 @@ type ReviewRatingStarProps = {
 
 function ReviewRatingStar(props: ReviewRatingStarProps): JSX.Element {
   const { value, title, disabled } = props;
-  const handleUpdateReviewRating = props.onChange;
+  const handleRatingChange = props.onChange;
 
   return (
     <>
@@ -20,7 +20,7 @@ function ReviewRatingStar(props: ReviewRatingStarProps): JSX.Element {
         id={`${value}-stars`}
         type="radio"
         disabled={disabled}
-        onChange={handleUpdateReviewRating}
+        onChange={handleRatingChange}
       />
       <label
         htmlFor={`${value}-stars`}

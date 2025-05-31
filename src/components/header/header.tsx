@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { userSelectors } from '../../store/slices/user-slice/user-slice';
-import Logo from '../logo';
-import HeaderUser from './header-user';
-import HeaderSignIn from './header-sign-in';
-import HeaderSignOut from './header-sign-out';
 import useAppSelector from '../../hooks/use-app-selector';
+import HeaderSignOut from './header-sign-out';
+import HeaderSignIn from './header-sign-in';
+import HeaderUser from './header-user';
+import Logo from '../logo';
 
 type HeaderComponentProps = {
   showUser: boolean;
