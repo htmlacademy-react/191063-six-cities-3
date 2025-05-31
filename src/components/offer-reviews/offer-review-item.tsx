@@ -1,7 +1,7 @@
 import { DateFormat } from '../../const/app-const';
 import { Review } from '../../types/review-types';
 import { getFormattedDate } from '../../utils/date-utils';
-import { getRatingWidth } from '../../utils/offer-utils';
+import { getRatingStyles } from '../../utils/offer-utils';
 
 type ReviewItemProps = {
   review: Review;
@@ -10,6 +10,7 @@ type ReviewItemProps = {
 function OfferReviewItem(props: ReviewItemProps): JSX.Element {
   const { comment, date, rating, user } = props.review;
   const formattedDate = getFormattedDate(date, DateFormat.Review);
+  const ratingStyles = getRatingStyles(rating);
 
   return (
     <li className="reviews__item">
@@ -28,7 +29,7 @@ function OfferReviewItem(props: ReviewItemProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: getRatingWidth(rating) }} />
+            <span style={ratingStyles} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

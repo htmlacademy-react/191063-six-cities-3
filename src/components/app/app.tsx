@@ -4,7 +4,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const/app-const';
 import { getToken } from '../../services/token';
 import { offersActions } from '../../store/slices/offers-slice/offers-slice';
-import { userActions, userSelectors } from '../../store/slices/user-slice/user-slice';
+import {
+  userActions,
+  userSelectors,
+} from '../../store/slices/user-slice/user-slice';
 import MainPage from '../../pages/main-page';
 import LoginPage from '../../pages/login-page';
 import OfferPage from '../../pages/offer-page';
@@ -25,7 +28,8 @@ function App(): JSX.Element {
         .unwrap()
         .then(() => {
           dispatch(offersActions.getFavoriteOffers());
-        }).catch(() => {});
+        })
+        .catch(() => {});
     }
   }, [dispatch, token, isLoggedIn]);
 
@@ -41,7 +45,7 @@ function App(): JSX.Element {
             path={AppRoute.Login}
             element={
               <PrivateRoute onlyNotAuth>
-                <LoginPage/>
+                <LoginPage />
               </PrivateRoute>
             }
           />

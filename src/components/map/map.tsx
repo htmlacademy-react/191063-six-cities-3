@@ -7,7 +7,7 @@ import useMap from '../../hooks/use-map';
 import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-type MapProps = {
+export type MapProps = {
   pageType: Page;
   city: City;
   offerPreviews: OfferPreviews;
@@ -55,7 +55,14 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, city, offerPreviews, hoveredOffer]);
 
-  return <section className={mapClasses.sectionClass} ref={mapRef}></section>;
+  return (
+    <section
+      className={mapClasses.sectionClass}
+      data-testid="map-test-id"
+      ref={mapRef}
+    >
+    </section>
+  );
 }
 
 export default Map;

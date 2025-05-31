@@ -3,6 +3,8 @@ import { RequestStatus } from '../../../const/api-const';
 import { NameSpace } from '../../../const/store-const';
 import { State } from '../../../types/store-types';
 import { getOfferPreviewById } from '../../../utils/offer-utils';
+import { MAX_REVIEWS_COUNT } from '../../../const/review-const';
+import { sortReviewsDate } from '../../../utils/reviews-utils';
 
 const selectSelf = (state: State) => state[NameSpace.FullOffer];
 const selectOffers = (state: State) => state[NameSpace.Offers];
@@ -29,7 +31,11 @@ export const selectNearOfferPreviewsStatus = createSelector(
 
 export const selectReviews = createSelector(
   selectSelf,
-  (state) => state.reviews
+  (state) => {
+    const sortedReviews = sortReviewsDate(state.reviews);
+    return sortedReviews.slice(0, MAX_REVIEWS_COUNT);
+  }
+
 );
 export const selectReviewsStatus = createSelector(
   selectSelf,

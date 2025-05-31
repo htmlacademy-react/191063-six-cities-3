@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute, CITIES } from '../../const/app-const';
 import { offersActions } from '../../store/slices/offers-slice/offers-slice';
 import { OfferPreviews } from '../../types/offer-types';
+import { CityName } from '../../types/app-types';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import OfferCard from '../offer-card';
 
 type FavoriteListItemProps = {
-  cityName: string;
+  cityName: CityName;
   offerPreviews: OfferPreviews;
 };
 

@@ -7,7 +7,7 @@ import {
 import { OfferCardType } from '../offer-card/offer-card-utils';
 import OfferCard from '../offer-card';
 
-type OfferPreviewListComponentProps = {
+export type OfferPreviewListComponentProps = {
   listType: OfferPreviewListType;
   cardType: OfferCardType;
   offerPreviews: OfferPreviews;

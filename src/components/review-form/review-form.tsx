@@ -1,9 +1,14 @@
 import { FormEvent, useState } from 'react';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 import { ReviewChangeHandler } from '../../types/review-types';
 import { MAN_REVIEW_LENGTH, MIN_REVIEW_LENGTH } from '../../const/review-const';
 import { RequestStatus } from '../../const/api-const';
 import { RatingOption } from '../../const/app-const';
-import { fullOfferActions, fullOfferSelectors } from '../../store/slices/full-offer-slice/full-offer-slice';
+import {
+  fullOfferActions,
+  fullOfferSelectors,
+} from '../../store/slices/full-offer-slice/full-offer-slice';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import ReviewRatingStar from './review-rating-star';
@@ -15,7 +20,9 @@ type ReviewFormProps = {
 function ReviewForm(props: ReviewFormProps): JSX.Element {
   const { offerId } = props;
   const dispatch = useAppDispatch();
-  const postReviewStatus = useAppSelector(fullOfferSelectors.selectPostReviewStatus);
+  const postReviewStatus = useAppSelector(
+    fullOfferSelectors.selectPostReviewStatus
+  );
   const [review, setReview] = useState({
     comment: '',
     rating: 0,
@@ -40,17 +47,29 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    const form = evt.currentTarget;
     evt.preventDefault();
-    dispatch(fullOfferActions.postReview({ offerId, review }));
-    evt.currentTarget.reset();
-    setReview({
-      comment: '',
-      rating: 0,
-    });
+    dispatch(fullOfferActions.postReview({ offerId, review }))
+      .unwrap()
+      .then(() => {
+        form.reset();
+        setReview({
+          comment: '',
+          rating: 0,
+        });
+      })
+      .catch((error: AxiosError) => {
+        toast.warn(error.message);
+      });
   };
 
   return (
-    <form className="reviews__form form" action="" onSubmit={handleSubmit}>
+    <form
+      className="reviews__form form"
+      data-testid="review-form-test-id"
+      action=""
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="comment">
         Your review
       </label>

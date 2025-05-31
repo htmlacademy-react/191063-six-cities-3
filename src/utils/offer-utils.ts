@@ -11,3 +11,7 @@ export function getRatingWidth(value: number): string {
   const widthPercent = (Number.parseInt(value.toFixed(), 10) * 100) / 5;
   return `${widthPercent}%`;
 }
+
+export function getRatingStyles(value: number) {
+  return { width: getRatingWidth(value) };
+}

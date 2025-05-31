@@ -2,6 +2,15 @@ export function getCapitalizedString(str: string): string {
   return str[0].toUpperCase() + str.slice(1);
 }
 
+export function isEscapeKey(evt: KeyboardEvent): boolean {
+  return evt.key === 'Escape';
+}
+
+export function getRandomElement<T>(array: T[]): T {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+
 export function pluralize(noun: string, count: number): string {
   if (count === 0 || count === 1) {
     return noun;
@@ -19,8 +28,4 @@ export function pluralize(noun: string, count: number): string {
   } else {
     return `${noun}s`;
   }
-}
-
-export function isEscapeKey(evt: KeyboardEvent): boolean {
-  return evt.key === 'Escape';
 }

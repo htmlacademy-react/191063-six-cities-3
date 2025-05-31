@@ -6,7 +6,7 @@ import createAppAsyncThunk from '../../create-app-async-thunk';
 export const getOfferFull = createAppAsyncThunk<
   OfferFull,
   string
->('offer/getOfferFull', async (offerId, { extra: api }) => {
+>('fullOffer/getOfferFull', async (offerId, { extra: api }) => {
   const response = await api.get<OfferFull>(`${APIRoute.Offers}/${offerId}`);
   return response.data;
 });
@@ -14,7 +14,7 @@ export const getOfferFull = createAppAsyncThunk<
 export const getNearOfferPreviews = createAppAsyncThunk<
   OfferPreviews,
   string
->('offer/getNearOfferPreviews', async (offerId, { extra: api }) => {
+>('fullOffer/getNearOfferPreviews', async (offerId, { extra: api }) => {
   const response = await api.get<OfferPreviews>(
     `${APIRoute.Offers}/${offerId}/nearby`
   );

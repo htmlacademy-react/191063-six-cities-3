@@ -22,7 +22,7 @@ function MainPage(): JSX.Element {
   }
 
   return (
-    <div className="page page--gray page--main">
+    <div className="page page--gray page--main" data-testid="main-page-test-id">
       <Helmet>
         <title>6 Cities</title>
       </Helmet>

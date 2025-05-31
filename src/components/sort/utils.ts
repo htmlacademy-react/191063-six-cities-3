@@ -28,11 +28,11 @@ function sortOfferPreviews(
 ): OfferPreviews {
   switch (sortOption) {
     case 'PriceUp':
-      return offerPreviews.toSorted(comparePriceUp);
+      return [...offerPreviews].sort(comparePriceUp);
     case 'PriceDown':
-      return offerPreviews.toSorted(comparePriceDown);
+      return [...offerPreviews].sort(comparePriceDown);
     case 'TopRated':
-      return offerPreviews.toSorted(compareRatingDown);
+      return [...offerPreviews].sort(compareRatingDown);
     default:
       return offerPreviews;
   }

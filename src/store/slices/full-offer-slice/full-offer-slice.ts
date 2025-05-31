@@ -21,17 +21,15 @@ import {
   selectReviews,
   selectReviewsStatus,
 } from './selectors';
+import { logout } from '../user-slice/async-actions';
 
 const initialState: FullOfferSlice = {
   offerFull: null,
   offerFullStatus: RequestStatus.Idle,
-
   nearOfferPreviews: [],
   nearOfferPreviewsStatus: RequestStatus.Idle,
-
   reviews: [],
   reviewsStatus: RequestStatus.Idle,
-
   postReviewStatus: RequestStatus.Idle,
 };
 
@@ -90,6 +88,11 @@ const fullOfferSlice = createSlice({
           .find((offerPreview) => offerPreview.id === action.payload.id);
         if (nearOfferPreview) {
           nearOfferPreview.isFavorite = action.payload.isFavorite;
+        }
+      })
+      .addCase(logout.fulfilled, (state) => {
+        if (state.offerFull?.isFavorite) {
+          state.offerFull.isFavorite = false;
         }
       });
   },

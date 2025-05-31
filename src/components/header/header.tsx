@@ -19,14 +19,12 @@ function HeaderComponent(props: HeaderComponentProps): JSX.Element {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Logo />
+            <Logo logoType='Header' />
           </div>
           {showUser && (
             <nav className="header__nav">
               <ul className="header__nav-list">
-                {currentUser && (
-                  <HeaderUser user={currentUser} />
-                )}
+                {currentUser && <HeaderUser user={currentUser} />}
                 {currentUser ? <HeaderSignOut /> : <HeaderSignIn />}
               </ul>
             </nav>
