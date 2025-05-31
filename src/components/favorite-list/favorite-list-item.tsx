@@ -2,19 +2,19 @@ import { OfferPreview } from '../../types/offer';
 import OfferCardSmall from '../offer-card-small';
 
 type FavoriteListItemProps = {
-  city: string;
+  cityName: string;
   offerPreviews: OfferPreview[];
 };
 
 function FavoriteListItem(props: FavoriteListItemProps): JSX.Element {
-  const { city, offerPreviews } = props;
+  const { cityName, offerPreviews } = props;
 
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">
-            <span>{city}</span>
+            <span>{cityName}</span>
           </a>
         </div>
       </div>

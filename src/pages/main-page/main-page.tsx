@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferPreview } from '../../types/offer';
+import { CITIES } from '../../const';
+import { getCityOffers } from '../../utils';
 import Header from '../../components/header';
 import Navigation from '../../components/navigation';
 import Sort from '../../components/sort';
@@ -14,6 +16,8 @@ type MainPageProps = {
 function MainPage(props: MainPageProps): JSX.Element {
   const { offerPreviews } = props;
   const [hoveredOffer, setHoveredOffer] = useState<OfferPreview | null>(null);
+  const currentCity = CITIES.Amsterdam;
+  const currentCityOffers = getCityOffers(currentCity, offerPreviews);
 
   return (
     <div className="page page--gray page--main">
@@ -22,19 +26,26 @@ function MainPage(props: MainPageProps): JSX.Element {
       </Helmet>
       <Header />
       <main className="page__main page__main--index">
-        <Navigation />
+        <Navigation currentCity={currentCity}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {offerPreviews.length} places to stay in Amsterdam
+                {currentCityOffers.length} places to stay in {currentCity.name}
               </b>
               <Sort />
-              <OfferPreviewList offerPreviews={offerPreviews} onOfferCardHover={setHoveredOffer}/>
+              <OfferPreviewList
+                offerPreviews={currentCityOffers}
+                onOfferCardHover={setHoveredOffer}
+              />
             </section>
             <div className="cities__right-section">
-              <MainMap hoveredOffer={hoveredOffer ? hoveredOffer : null}/>
+              <MainMap
+                city={currentCity}
+                offerPreviews={currentCityOffers}
+                hoveredOffer={hoveredOffer}
+              />
             </div>
           </div>
         </div>

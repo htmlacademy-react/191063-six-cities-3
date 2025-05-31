@@ -1,6 +1,6 @@
 import { OfferPreview } from './types/offer';
-import { AuthorizationStatus } from './const';
-import { AppRoute } from './const';
+import { City } from './types/city';
+import { CityName, CITIES, AppRoute, AuthorizationStatus } from './const';
 
 function getCapitalizedString(str: string): string {
   return str[0].toUpperCase() + str.slice(1);
@@ -11,21 +11,28 @@ function getRatingWidth(value: number): string {
   return `${widthPercent}%`;
 }
 
-function getCitiesWithFavorites(
-  cities: string[],
-  offerPreviews: OfferPreview[]
-): string[] {
-  return cities.filter((city) =>
-    offerPreviews.some((offerPreview) => offerPreview.city.name === city)
-  );
+function getCitiesNames(): string[] {
+  return Object.values(CityName);
 }
 
-function getCityFavorites(
-  city: string,
+function getCitiesWithFavorites(offerPreviews: OfferPreview[]): City[] | null {
+  const citiesNamesWithFavorites = new Set(
+    offerPreviews.map((offerPreview) => offerPreview.city.name)
+  );
+
+  const citiesWithFavorites = Object.values(CITIES).filter((city) =>
+    citiesNamesWithFavorites.has(city.name)
+  );
+
+  return citiesWithFavorites;
+}
+
+function getCityOffers(
+  city: City,
   offerPreviews: OfferPreview[]
 ): OfferPreview[] {
   return offerPreviews.filter(
-    (offerPreview) => offerPreview.city.name === city
+    (offerPreview) => offerPreview.city.name === city.name
   );
 }
 
@@ -59,8 +66,9 @@ function pluralize(noun: string, count: number): string {
 export {
   getCapitalizedString,
   getRatingWidth,
+  getCitiesNames,
   getCitiesWithFavorites,
-  getCityFavorites,
+  getCityOffers,
   isUserLoggedIn,
   isRequiredPage,
   pluralize,
