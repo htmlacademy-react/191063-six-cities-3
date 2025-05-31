@@ -3,6 +3,7 @@ import { Values } from './types/common';
 
 const NEAR_OFFERS_COUNT = 3;
 const MIN_REVIEW_LENGTH = 50;
+const MAN_REVIEW_LENGTH = 300;
 
 const AppRoute = {
   Root: '/',
@@ -25,6 +26,8 @@ const APIRoute = {
   Login: '/login',
   Logout: '/logout',
   Offers: '/offers',
+  Reviews: '/comments',
+  Favorite: '/favorite',
 } as const;
 
 type APIRouteType = Values<typeof APIRoute>;
@@ -88,14 +91,38 @@ const CITIES: Record<string, City> = {
   },
 } as const;
 
-export type { AppRouteType, AuthorizationStatusType, APIRouteType };
+const DateFormat = {
+  Review: 'MMMM YYYY',
+} as const;
+
+type DateFormatType = Values<typeof DateFormat>;
+
+const RequestStatus = {
+  Idle: 'Idle',
+  Loading: 'Loading',
+  Success: 'Success',
+  Failed: 'Failed'
+} as const;
+
+type RequestStatusType = Values<typeof RequestStatus>;
+
+export type {
+  AppRouteType,
+  AuthorizationStatusType,
+  APIRouteType,
+  DateFormatType,
+  RequestStatusType,
+};
 
 export {
   NEAR_OFFERS_COUNT,
   MIN_REVIEW_LENGTH,
+  MAN_REVIEW_LENGTH,
   AppRoute,
   AuthorizationStatus,
   APIRoute,
   RatingOption,
   CITIES,
+  DateFormat,
+  RequestStatus,
 };

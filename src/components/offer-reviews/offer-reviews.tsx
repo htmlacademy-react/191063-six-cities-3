@@ -1,15 +1,16 @@
 import { Review } from '../../types/review';
 import { selectIsUserLoggedIn } from '../../store/selectors';
 import OfferReviewItem from './offer-review-item';
-import ReviewForm from '../review-form';
 import useAppSelector from '../../hooks/use-app-selector';
+import { ReactNode } from 'react';
 
 type OfferReviewsProps = {
   reviews: Review[];
+  reviewForm: ReactNode;
 };
 
 function OfferReviews(props: OfferReviewsProps): JSX.Element {
-  const { reviews } = props;
+  const { reviews, reviewForm } = props;
   const isLoggedIn = useAppSelector(selectIsUserLoggedIn);
 
   return (
@@ -22,7 +23,7 @@ function OfferReviews(props: OfferReviewsProps): JSX.Element {
           <OfferReviewItem key={review.id} review={review} />
         ))}
       </ul>
-      {isLoggedIn ? <ReviewForm /> : null}
+      {isLoggedIn ? reviewForm : null}
     </section>
   );
 }

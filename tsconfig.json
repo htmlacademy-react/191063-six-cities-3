@@ -21,6 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "vite.config.ts", "trash/video"],
+  "include": ["src", "vite.config.ts", "trash/video", "trash/mock"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

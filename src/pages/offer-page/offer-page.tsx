@@ -1,10 +1,24 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { getOfferPreviewById, getRatingWidth } from '../../utils/offer-utils';
-import { selectOfferPreviews } from '../../store/selectors';
-import { getMockReviews } from '../../mock/reviews-mock';
-import { offerMock } from '../../mock/offer-mock';
-import { getMockNearOfferPreviews } from '../../mock/utils-mock';
+import {
+  getOfferFull,
+  getReviews,
+  getNearOfferPreviews,
+} from '../../store/api-actions';
+import {
+  selectOfferPreviews,
+  selectOfferPreviewsStatus,
+  selectOfferFull,
+  selectOfferFullStatus,
+  selectReviews,
+  selectReviewsStatus,
+  selectNearOfferPreviews,
+  selectNearOfferPreviewsStatus,
+} from '../../store/selectors';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import useAppSelector from '../../hooks/use-app-selector';
 import Header from '../../components/header';
 import OfferGallery from '../../components/offer-gallery';
 import OfferFeatures from '../../components/offer-features';
@@ -13,18 +27,52 @@ import OfferHost from '../../components/offer-host';
 import OfferReviews from '../../components/offer-reviews';
 import OfferPreviewList from '../../components/offer-preview-list';
 import Map from '../../components/map';
-import useAppSelector from '../../hooks/use-app-selector';
-
-const mockReviews = getMockReviews();
+import NotFoundPage from '../not-found-page';
+import LoadingPage from '../loading-page';
+import ReviewForm from '../../components/review-form';
 
 function OfferPage(): JSX.Element {
   const offerPreviews = useAppSelector(selectOfferPreviews);
-  const { offerId = '' } = useParams();
+  const offerPreviewsStatus = useAppSelector(selectOfferPreviewsStatus);
+  const offerFull = useAppSelector(selectOfferFull);
+  const offerFullStatus = useAppSelector(selectOfferFullStatus);
+  const reviews = useAppSelector(selectReviews);
+  const reviewsStatus = useAppSelector(selectReviewsStatus);
+  const nearOfferPreviews = useAppSelector(selectNearOfferPreviews);
+  const nearOfferPreviewsStatus = useAppSelector(selectNearOfferPreviewsStatus);
+  const dispatch = useAppDispatch();
+  const { offerId } = useParams();
 
-  const offerPreview = getOfferPreviewById(offerPreviews, offerId);
-  const offerFull = offerMock;
-  const nearOfferPreviews = getMockNearOfferPreviews(offerPreview);
-  const mapOfferPreviews = [...nearOfferPreviews, offerPreview];
+  useEffect(() => {
+    if (offerId && offerFull?.id !== offerId) {
+      dispatch(getOfferFull(offerId));
+      dispatch(getReviews(offerId));
+      dispatch(getNearOfferPreviews(offerId));
+    }
+  }, [dispatch, offerId, offerFull]);
+
+  if (
+    offerPreviewsStatus === 'Loading' ||
+    offerFullStatus === 'Loading' ||
+    reviewsStatus === 'Loading' ||
+    nearOfferPreviewsStatus === 'Loading'
+  ) {
+    return <LoadingPage />;
+  }
+
+  if (
+    !offerId ||
+    !offerFull ||
+    offerPreviewsStatus === 'Failed' ||
+    offerFullStatus === 'Failed' ||
+    reviewsStatus === 'Failed' ||
+    nearOfferPreviewsStatus === 'Failed'
+  ) {
+    return <NotFoundPage />;
+  }
+
+  const currentOfferPreview = getOfferPreviewById(offerPreviews, offerId);
+  const mapOfferPreviews = [...nearOfferPreviews, currentOfferPreview];
 
   const {
     bedrooms,
@@ -48,7 +96,7 @@ function OfferPage(): JSX.Element {
       <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferGallery images={images} />
+          <OfferGallery images={images.slice(0, 6)} />
           <div className="offer__container container">
             <div className="offer__wrapper">
               {isPremium && (
@@ -88,14 +136,17 @@ function OfferPage(): JSX.Element {
               <div className="offer__description">
                 <p className="offer__text">{description}</p>
               </div>
-              <OfferReviews reviews={mockReviews} />
+              <OfferReviews
+                reviews={reviews}
+                reviewForm={<ReviewForm offerId={offerId} />}
+              />
             </div>
           </div>
           <Map
             pageType={'Offer'}
-            city={offerPreview.city}
+            city={currentOfferPreview.city}
             offerPreviews={mapOfferPreviews}
-            hoveredOffer={offerPreview}
+            hoveredOffer={currentOfferPreview}
           />
         </section>
         <div className="container">

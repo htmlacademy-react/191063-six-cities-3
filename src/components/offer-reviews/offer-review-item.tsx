@@ -1,4 +1,6 @@
+import { DateFormat } from '../../const';
 import { Review } from '../../types/review';
+import { getFormattedDate } from '../../utils/date-utils';
 import { getRatingWidth } from '../../utils/offer-utils';
 
 type ReviewItemProps = {
@@ -7,6 +9,7 @@ type ReviewItemProps = {
 
 function OfferReviewItem(props: ReviewItemProps): JSX.Element {
   const { comment, date, rating, user } = props.review;
+  const formattedDate = getFormattedDate(date, DateFormat.Review);
 
   return (
     <li className="reviews__item">
@@ -30,8 +33,8 @@ function OfferReviewItem(props: ReviewItemProps): JSX.Element {
           </div>
         </div>
         <p className="reviews__text">{comment}</p>
-        <time className="reviews__time" dateTime={date.toISOString()}>
-          April 2019
+        <time className="reviews__time" dateTime={date}>
+          {formattedDate}
         </time>
       </div>
     </li>

@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { isRequiredPage } from '../../utils/app-utils';
-import { selectIsUserLoggedIn } from '../../store/selectors';
+import { selectCurrentUser } from '../../store/selectors';
 import { AppRoute } from '../../const';
 import Logo from '../logo';
 import HeaderUser from './header-user';
@@ -10,8 +10,8 @@ import useAppSelector from '../../hooks/use-app-selector';
 
 function Header(): JSX.Element {
   const { pathname } = useLocation();
+  const currentUser = useAppSelector(selectCurrentUser);
   const isLoginPage = isRequiredPage(pathname, AppRoute.Login);
-  const isLoggedIn = useAppSelector(selectIsUserLoggedIn);
 
   return (
     <header className="header">
@@ -23,8 +23,8 @@ function Header(): JSX.Element {
           {!isLoginPage && (
             <nav className="header__nav">
               <ul className="header__nav-list">
-                {isLoggedIn && <HeaderUser />}
-                {isLoggedIn ? <HeaderSignOut /> : <HeaderSignIn />}
+                {currentUser && <HeaderUser user={currentUser}/>}
+                {currentUser ? <HeaderSignOut /> : <HeaderSignIn />}
               </ul>
             </nav>
           )}
