@@ -1,4 +1,4 @@
-import { ReviewChangeHandler } from '../../types/review';
+import { ReviewChangeHandler } from '../../types/review-types';
 
 type ReviewRatingStarProps = {
   value: number;

@@ -1,8 +1,8 @@
-function getCapitalizedString(str: string): string {
+export function getCapitalizedString(str: string): string {
   return str[0].toUpperCase() + str.slice(1);
 }
 
-function pluralize(noun: string, count: number): string {
+export function pluralize(noun: string, count: number): string {
   if (count === 0 || count === 1) {
     return noun;
   } else if (noun.endsWith('y') && !/[aeiou]y$/i.test(noun)) {
@@ -21,8 +21,6 @@ function pluralize(noun: string, count: number): string {
   }
 }
 
-function isEscapeKey(evt: KeyboardEvent): boolean {
+export function isEscapeKey(evt: KeyboardEvent): boolean {
   return evt.key === 'Escape';
 }
-
-export { getCapitalizedString, pluralize, isEscapeKey };

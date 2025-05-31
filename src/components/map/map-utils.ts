@@ -1,4 +1,4 @@
-import { Page } from '../../types/page';
+import { Page } from '../../types/app-types';
 
 function getMapClasses(pageType: Page) {
   switch (pageType) {

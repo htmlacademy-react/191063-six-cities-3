@@ -1,7 +1,6 @@
 import { useRef, useEffect } from 'react';
-import { OfferPreview, OfferPreviews } from '../../types/offer';
-import { City } from '../../types/city';
-import { Page } from '../../types/page';
+import { OfferPreview, OfferPreviews } from '../../types/offer-types';
+import { City, Page } from '../../types/app-types';
 import { getMapClasses } from './map-utils';
 import { defaultCustomIcon, activeCustomIcon } from './pin-icons';
 import useMap from '../../hooks/use-map';
@@ -33,7 +32,10 @@ function Map(props: MapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       markerLayerRef.current.clearLayers();
-      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+      map.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
       offerPreviews.forEach((offerPreview) => {
         leaflet
           .marker(

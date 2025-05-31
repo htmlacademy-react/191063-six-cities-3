@@ -1,22 +1,12 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { getOfferPreviewById, getRatingWidth } from '../../utils/offer-utils';
+import { getRatingWidth } from '../../utils/offer-utils';
 import {
-  getOfferFull,
-  getReviews,
-  getNearOfferPreviews,
-} from '../../store/api-actions';
-import {
-  selectOfferPreviews,
-  selectOfferPreviewsStatus,
-  selectOfferFull,
-  selectOfferFullStatus,
-  selectReviews,
-  selectReviewsStatus,
-  selectNearOfferPreviews,
-  selectNearOfferPreviewsStatus,
-} from '../../store/selectors';
+  fullOfferActions,
+  fullOfferSelectors,
+} from '../../store/slices/full-offer-slice/full-offer-slice';
+import { NEAR_OFFERS_COUNT } from '../../const/offer-const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import Header from '../../components/header';
@@ -30,48 +20,40 @@ import Map from '../../components/map';
 import NotFoundPage from '../not-found-page';
 import LoadingPage from '../loading-page';
 import ReviewForm from '../../components/review-form';
+import useUpdateFavoriteOffer from '../../hooks/use-update-favorite-offer';
+import FavoriteButton from '../../components/favorite-button';
 
 function OfferPage(): JSX.Element {
-  const offerPreviews = useAppSelector(selectOfferPreviews);
-  const offerPreviewsStatus = useAppSelector(selectOfferPreviewsStatus);
-  const offerFull = useAppSelector(selectOfferFull);
-  const offerFullStatus = useAppSelector(selectOfferFullStatus);
-  const reviews = useAppSelector(selectReviews);
-  const reviewsStatus = useAppSelector(selectReviewsStatus);
-  const nearOfferPreviews = useAppSelector(selectNearOfferPreviews);
-  const nearOfferPreviewsStatus = useAppSelector(selectNearOfferPreviewsStatus);
+  const offerFull = useAppSelector(fullOfferSelectors.selectOfferFull);
+  const currentOfferPreview = useAppSelector(
+    fullOfferSelectors.selectCurrentOfferPreview
+  );
+  const reviews = useAppSelector(fullOfferSelectors.selectReviews);
+  const nearOfferPreviews = useAppSelector(
+    fullOfferSelectors.selectNearOfferPreviews
+  ).slice(0, NEAR_OFFERS_COUNT);
+  const isLoading = useAppSelector(fullOfferSelectors.selectIsLoading);
+  const isFailed = useAppSelector(fullOfferSelectors.selectIsFailed);
+  const updateFavoriteClick = useUpdateFavoriteOffer();
   const dispatch = useAppDispatch();
   const { offerId } = useParams();
 
   useEffect(() => {
     if (offerId && offerFull?.id !== offerId) {
-      dispatch(getOfferFull(offerId));
-      dispatch(getReviews(offerId));
-      dispatch(getNearOfferPreviews(offerId));
+      dispatch(fullOfferActions.getOfferFull(offerId));
+      dispatch(fullOfferActions.getReviews(offerId));
+      dispatch(fullOfferActions.getNearOfferPreviews(offerId));
     }
   }, [dispatch, offerId, offerFull]);
 
-  if (
-    offerPreviewsStatus === 'Loading' ||
-    offerFullStatus === 'Loading' ||
-    reviewsStatus === 'Loading' ||
-    nearOfferPreviewsStatus === 'Loading'
-  ) {
+  if (isLoading) {
     return <LoadingPage />;
   }
 
-  if (
-    !offerId ||
-    !offerFull ||
-    offerPreviewsStatus === 'Failed' ||
-    offerFullStatus === 'Failed' ||
-    reviewsStatus === 'Failed' ||
-    nearOfferPreviewsStatus === 'Failed'
-  ) {
+  if (!offerId || !offerFull || isFailed) {
     return <NotFoundPage />;
   }
 
-  const currentOfferPreview = getOfferPreviewById(offerPreviews, offerId);
   const mapOfferPreviews = [...nearOfferPreviews, currentOfferPreview];
 
   const {
@@ -81,6 +63,7 @@ function OfferPage(): JSX.Element {
     host,
     images,
     isPremium,
+    isFavorite,
     maxAdults,
     price,
     rating,
@@ -88,15 +71,19 @@ function OfferPage(): JSX.Element {
     type,
   } = offerFull;
 
+  const handleFavoriteClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    updateFavoriteClick(evt, offerId, isFavorite);
+  };
+
   return (
     <div className="page">
       <Helmet>
         <title>6 Cities. Offer</title>
       </Helmet>
-      <Header />
+      <Header showUser />
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferGallery images={images.slice(0, 6)} />
+          <OfferGallery images={images} />
           <div className="offer__container container">
             <div className="offer__wrapper">
               {isPremium && (
@@ -106,12 +93,11 @@ function OfferPage(): JSX.Element {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton
+                  buttonType="Offer"
+                  isFavorite={isFavorite}
+                  onClick={handleFavoriteClick}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -157,6 +143,7 @@ function OfferPage(): JSX.Element {
             <OfferPreviewList
               listType={'NearPlaces'}
               offerPreviews={nearOfferPreviews}
+              onFavoriteClick={updateFavoriteClick}
             />
           </section>
         </div>

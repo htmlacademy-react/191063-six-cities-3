@@ -1,17 +1,21 @@
-import { useLocation } from 'react-router-dom';
-import { isRequiredPage } from '../../utils/app-utils';
-import { selectCurrentUser } from '../../store/selectors';
-import { AppRoute } from '../../const';
+import { userSelectors } from '../../store/slices/user-slice/user-slice';
+import { offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import Logo from '../logo';
 import HeaderUser from './header-user';
 import HeaderSignIn from './header-sign-in';
 import HeaderSignOut from './header-sign-out';
 import useAppSelector from '../../hooks/use-app-selector';
 
-function Header(): JSX.Element {
-  const { pathname } = useLocation();
-  const currentUser = useAppSelector(selectCurrentUser);
-  const isLoginPage = isRequiredPage(pathname, AppRoute.Login);
+type HeaderProps = {
+  showUser: boolean;
+};
+
+function Header(props: HeaderProps): JSX.Element {
+  const { showUser } = props;
+  const currentUser = useAppSelector(userSelectors.selectCurrentUser);
+  const favoriteOffersCount = useAppSelector(
+    offersSelectors.selectFavoriteOfferPreviews
+  ).length;
 
   return (
     <header className="header">
@@ -20,10 +24,15 @@ function Header(): JSX.Element {
           <div className="header__left">
             <Logo />
           </div>
-          {!isLoginPage && (
+          {showUser && (
             <nav className="header__nav">
               <ul className="header__nav-list">
-                {currentUser && <HeaderUser user={currentUser}/>}
+                {currentUser && (
+                  <HeaderUser
+                    user={currentUser}
+                    favoriteOffersCount={favoriteOffersCount}
+                  />
+                )}
                 {currentUser ? <HeaderSignOut /> : <HeaderSignIn />}
               </ul>
             </nav>

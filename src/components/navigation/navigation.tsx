@@ -1,4 +1,4 @@
-import { CITIES } from '../../const';
+import { CITIES } from '../../const/app-const';
 import NavigationItem from './navigation-item';
 
 function Navigation(): JSX.Element {

@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { isEscapeKey } from '../../utils/common-utils';
 import { SortOptionLabel } from './const';
-import { selectSortOption } from '../../store/selectors';
+import { offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import SortList from './sort-list';
 import useAppSelector from '../../hooks/use-app-selector';
 
 function Sort(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
-  const currentSortOption = useAppSelector(selectSortOption);
+  const currentSortOption = useAppSelector(offersSelectors.selectSortOption);
   const dropdownRef = useRef<HTMLFormElement>(null);
 
   const handleFormToggle = (): void => {
