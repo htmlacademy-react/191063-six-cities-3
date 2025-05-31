@@ -16,13 +16,6 @@ const AuthorizationStatus = {
   Unknown: 'UNKNOWN',
 } as const;
 
-const SortOption = {
-  Popular: { title: 'Popular' },
-  PriceUp: { title: 'Price: low to high' },
-  PriceDown: { title: 'Price: high to low' },
-  TopRated: { title: 'Top rated first' },
-} as const;
-
 const RatingType = {
   Perfect: { value: 5, title: 'perfect' },
   Good: { value: 4, title: 'good' },
@@ -87,7 +80,6 @@ export {
   MIN_REVIEW_LENGTH,
   AppRoute,
   AuthorizationStatus,
-  SortOption,
   RatingType,
   CITIES,
 };

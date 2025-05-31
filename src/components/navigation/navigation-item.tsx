@@ -1,7 +1,8 @@
+import { City } from '../../types/city';
+import { setCity } from '../../store/action';
+import { selectCity } from '../../store/selectors';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import { setCity } from '../../store/action';
-import { City } from '../../types/city';
 
 type NavigationItemProps = {
   itemCity: City;
@@ -9,7 +10,7 @@ type NavigationItemProps = {
 
 function NavigationItem(props: NavigationItemProps): JSX.Element {
   const { itemCity } = props;
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector(selectCity);
   const activeClass = itemCity.name === currentCity.name ? ' tabs__item--active' : '';
   const dispatch = useAppDispatch();
 

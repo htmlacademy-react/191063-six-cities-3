@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferPreview } from '../../types/offer';
-import { SortType } from '../../types/sort';
-import { SortOption } from '../../const';
 import { getCityOffers } from '../../utils/city-utils';
 import { pluralize } from '../../utils/common-utils';
-import { sortOfferPreviews } from '../../utils/sort-utils';
+import { sortOfferPreviews } from '../../components/sort/utils';
+import { selectCity, selectOfferPreviews, selectSortOption } from '../../store/selectors';
 import Header from '../../components/header';
 import Navigation from '../../components/navigation';
 import Sort from '../../components/sort';
@@ -15,18 +14,17 @@ import useAppSelector from '../../hooks/use-app-selector';
 
 function MainPage(): JSX.Element {
   const [hoveredOffer, setHoveredOffer] = useState<OfferPreview | null>(null);
-  const [sortOption, setSortOption] = useState<SortType>(SortOption.Popular);
-  const currentCity = useAppSelector((state) => state.city);
-  const allOfferPreviews = useAppSelector((state) => state.offerPreviews);
+  const currentCity = useAppSelector(selectCity);
+  const currentSortOption = useAppSelector(selectSortOption);
+  const allOfferPreviews = useAppSelector(selectOfferPreviews);
 
   const cityOfferPreviews = getCityOffers(currentCity, allOfferPreviews);
-  const sortedOfferPreviews = sortOfferPreviews(cityOfferPreviews, sortOption);
+  const sortedOfferPreviews = sortOfferPreviews(
+    cityOfferPreviews,
+    currentSortOption
+  );
 
   const countOfferPreviews = sortedOfferPreviews.length;
-
-  const handleSetSortOption = (newSortOption: SortType): void => {
-    setSortOption(newSortOption);
-  };
 
   return (
     <div className="page page--gray page--main">
@@ -41,12 +39,12 @@ function MainPage(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {`${countOfferPreviews} ${pluralize('place', countOfferPreviews)} to stay in ${currentCity.name}`}
+                {`${countOfferPreviews} ${pluralize(
+                  'place',
+                  countOfferPreviews
+                )} to stay in ${currentCity.name}`}
               </b>
-              <Sort
-                currentSortOption={sortOption}
-                handleSetSortOption={handleSetSortOption}
-              />
+              <Sort />
               <OfferPreviewList
                 listType={'Cities'}
                 offerPreviews={sortedOfferPreviews}

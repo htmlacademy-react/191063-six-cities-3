@@ -1,14 +1,19 @@
-import { SortType } from '../../types/sort';
+import { SortOptionLabel } from './const';
+import { SortOptionType } from './types';
+import { setSortOption } from '../../store/action';
+import { selectSortOption } from '../../store/selectors';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import useAppSelector from '../../hooks/use-app-selector';
 
 type SortItemProps = {
-  itemSortOption: SortType;
-  currentSortOption: SortType;
-  handleSetSortOption: (sortOption: SortType) => void;
+  itemSortOption: SortOptionType;
   setIsOpen: (isOpen: boolean) => void;
 };
 
 function SortItem(props: SortItemProps): JSX.Element {
-  const { itemSortOption, currentSortOption, handleSetSortOption, setIsOpen } = props;
+  const { itemSortOption, setIsOpen } = props;
+  const currentSortOption = useAppSelector(selectSortOption);
+  const dispatch = useAppDispatch();
 
   const className =
     itemSortOption === currentSortOption
@@ -16,13 +21,13 @@ function SortItem(props: SortItemProps): JSX.Element {
       : 'places__option';
 
   const handleItemClick = (): void => {
-    handleSetSortOption(itemSortOption);
+    dispatch(setSortOption(itemSortOption));
     setIsOpen(false);
   };
 
   return (
     <li className={className} tabIndex={0} onClick={handleItemClick}>
-      {itemSortOption.title}
+      {SortOptionLabel[itemSortOption]}
     </li>
   );
 }
