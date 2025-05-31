@@ -20,7 +20,6 @@ import Map from '../../components/map';
 import NotFoundPage from '../not-found-page';
 import LoadingPage from '../loading-page';
 import ReviewForm from '../../components/review-form';
-import useUpdateFavoriteOffer from '../../hooks/use-update-favorite-offer';
 import FavoriteButton from '../../components/favorite-button';
 
 function OfferPage(): JSX.Element {
@@ -34,7 +33,6 @@ function OfferPage(): JSX.Element {
   ).slice(0, NEAR_OFFERS_COUNT);
   const isLoading = useAppSelector(fullOfferSelectors.selectIsLoading);
   const isFailed = useAppSelector(fullOfferSelectors.selectIsFailed);
-  const updateFavoriteClick = useUpdateFavoriteOffer();
   const dispatch = useAppDispatch();
   const { offerId } = useParams();
 
@@ -71,10 +69,6 @@ function OfferPage(): JSX.Element {
     type,
   } = offerFull;
 
-  const handleFavoriteClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
-    updateFavoriteClick(evt, offerId, isFavorite);
-  };
-
   return (
     <div className="page">
       <Helmet>
@@ -95,8 +89,8 @@ function OfferPage(): JSX.Element {
                 <h1 className="offer__name">{title}</h1>
                 <FavoriteButton
                   buttonType="Offer"
+                  offerId={offerId}
                   isFavorite={isFavorite}
-                  onClick={handleFavoriteClick}
                 />
               </div>
               <div className="offer__rating rating">
@@ -141,9 +135,9 @@ function OfferPage(): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <OfferPreviewList
-              listType={'NearPlaces'}
+              listType={'Near'}
+              cardType={'Near'}
               offerPreviews={nearOfferPreviews}
-              onFavoriteClick={updateFavoriteClick}
             />
           </section>
         </div>

@@ -1,17 +1,23 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { OfferPreview } from '../../types/offer-types';
 import { AppRoute } from '../../const/app-const';
 import { getCapitalizedString } from '../../utils/common-utils';
 import { getRatingWidth } from '../../utils/offer-utils';
-import { updateFavoriteOfferType } from '../../hooks/use-update-favorite-offer';
+import {
+  getCardImageSize,
+  getOfferCardClasses,
+  OfferCardType,
+} from './offer-card-utils';
 import FavoriteButton from '../favorite-button';
 
-type OfferCardProps = {
+type OfferCardComponentProps = {
+  cardType: OfferCardType;
   offerPreview: OfferPreview;
-  onFavoriteClick: updateFavoriteOfferType;
+  onHover?: (hoveredOffer: OfferPreview | null) => void;
 };
 
-function OfferCardSmall(props: OfferCardProps): JSX.Element {
+function OfferCardComponent(props: OfferCardComponentProps): JSX.Element {
   const {
     id,
     title,
@@ -22,46 +28,58 @@ function OfferCardSmall(props: OfferCardProps): JSX.Element {
     previewImage,
     rating,
   } = props.offerPreview;
-  const onFavoriteClick = props.onFavoriteClick;
-  const offerLink = AppRoute.Offer.replace(':offerId', id);
+  const cardType = props.cardType;
+  const onHover = props.onHover;
 
-  const handleFavoriteClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
-    onFavoriteClick(evt, id, isFavorite);
+  const offerLink = AppRoute.Offer.replace(':offerId', id);
+  const classes = getOfferCardClasses(cardType);
+  const imageSize = getCardImageSize(cardType);
+
+  const handleMouseEnter = () => {
+    onHover?.(props.offerPreview);
+  };
+
+  const handleMouseLeave = () => {
+    onHover?.(null);
   };
 
   return (
-    <article className="favorites__card place-card">
+    <article
+      className={classes.articleClass}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="favorites__image-wrapper place-card__image-wrapper">
+      <div className={classes.imgWrapperClass}>
         <Link to={offerLink}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={150}
-            height={110}
-            alt="Place image"
+            width={imageSize.width}
+            height={imageSize.height}
+            alt={title}
           />
         </Link>
       </div>
-      <div className="favorites__card-info place-card__info">
+      <div className={classes.divInfoClass}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€{price}</b>
-            <span className="place-card__price-text">/&nbsp;night</span>
+            <b className="place-card__price-value">&euro;{price}</b>
+            <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <FavoriteButton
-            buttonType='PlaceCard'
+            buttonType="PlaceCard"
+            offerId={id}
             isFavorite={isFavorite}
-            onClick={handleFavoriteClick}
           />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: getRatingWidth(rating) }} />
+            <span style={{ width: getRatingWidth(rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -74,4 +92,6 @@ function OfferCardSmall(props: OfferCardProps): JSX.Element {
   );
 }
 
-export default OfferCardSmall;
+const OfferCard = memo(OfferCardComponent);
+
+export default OfferCard;

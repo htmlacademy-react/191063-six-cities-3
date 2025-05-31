@@ -5,18 +5,15 @@ import Header from '../../components/header';
 import Navigation from '../../components/navigation';
 import useAppSelector from '../../hooks/use-app-selector';
 import LoadingPage from '../loading-page';
-import useMainOfferPreviews from '../../hooks/use-main-offer-previews';
 import MainOffers from '../../components/main-offers';
 import MainOffersEmpty from '../../components/main-offers-empty';
-import useUpdateFavoriteOffer from '../../hooks/use-update-favorite-offer';
 
 function MainPage(): JSX.Element {
-  const offerPreviews = useMainOfferPreviews();
+  const offerPreviews = useAppSelector(offersSelectors.selectMainOffers);
   const currentCity = useAppSelector(offersSelectors.selectCity);
   const offerPreviewsStatus = useAppSelector(
     offersSelectors.selectOfferPreviewsStatus
   );
-  const updateFavoriteClick = useUpdateFavoriteOffer();
   const isOffersEmpty = offerPreviews.length === 0;
   const mainAddClass = isOffersEmpty ? ' page__main--index-empty' : '';
 
@@ -38,7 +35,6 @@ function MainPage(): JSX.Element {
           <MainOffers
             currentCity={currentCity}
             offerPreviews={offerPreviews}
-            onFavoriteClick={updateFavoriteClick}
           />
         )}
       </main>

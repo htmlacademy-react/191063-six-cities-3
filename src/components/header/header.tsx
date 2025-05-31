@@ -1,21 +1,18 @@
+import { memo } from 'react';
 import { userSelectors } from '../../store/slices/user-slice/user-slice';
-import { offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import Logo from '../logo';
 import HeaderUser from './header-user';
 import HeaderSignIn from './header-sign-in';
 import HeaderSignOut from './header-sign-out';
 import useAppSelector from '../../hooks/use-app-selector';
 
-type HeaderProps = {
+type HeaderComponentProps = {
   showUser: boolean;
 };
 
-function Header(props: HeaderProps): JSX.Element {
+function HeaderComponent(props: HeaderComponentProps): JSX.Element {
   const { showUser } = props;
   const currentUser = useAppSelector(userSelectors.selectCurrentUser);
-  const favoriteOffersCount = useAppSelector(
-    offersSelectors.selectFavoriteOfferPreviews
-  ).length;
 
   return (
     <header className="header">
@@ -28,10 +25,7 @@ function Header(props: HeaderProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 {currentUser && (
-                  <HeaderUser
-                    user={currentUser}
-                    favoriteOffersCount={favoriteOffersCount}
-                  />
+                  <HeaderUser user={currentUser} />
                 )}
                 {currentUser ? <HeaderSignOut /> : <HeaderSignIn />}
               </ul>
@@ -42,5 +36,7 @@ function Header(props: HeaderProps): JSX.Element {
     </header>
   );
 }
+
+const Header = memo(HeaderComponent);
 
 export default Header;

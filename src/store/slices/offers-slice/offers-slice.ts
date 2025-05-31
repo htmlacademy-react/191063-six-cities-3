@@ -16,6 +16,7 @@ import {
   selectCity,
   selectFavoriteOfferPreviews,
   selectFavoriteOfferPreviewsStatus,
+  selectMainOffers,
   selectOfferPreviews,
   selectOfferPreviewsStatus,
   selectSortOption,
@@ -89,6 +90,7 @@ export const offersActions = {
 export const offersSelectors = {
   selectCity,
   selectSortOption,
+  selectMainOffers,
   selectOfferPreviews,
   selectOfferPreviewsStatus,
   selectFavoriteOfferPreviews,

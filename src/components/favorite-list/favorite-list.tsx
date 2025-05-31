@@ -1,31 +1,31 @@
-import { updateFavoriteOfferType } from '../../hooks/use-update-favorite-offer';
+import { CityName } from '../../types/app-types';
 import { OfferPreviews } from '../../types/offer-types';
-import { getCitiesWithFavorites, getCityOffers } from '../../utils/city-utils';
 import FavoriteListItem from './favorite-list-item';
+
+type OffersByCity = Record<CityName, OfferPreviews>;
 
 type FavoriteListProps = {
   offerPreviews: OfferPreviews;
-  onFavoriteClick: updateFavoriteOfferType;
 };
 
 function FavoriteList(props: FavoriteListProps): JSX.Element {
-  const { offerPreviews, onFavoriteClick } = props;
-  const citiesWithFavorites = getCitiesWithFavorites(offerPreviews);
+  const { offerPreviews } = props;
+  const offersByCity: OffersByCity = Object.groupBy(
+    offerPreviews,
+    (offerPreview) => offerPreview.city.name
+  ) as OffersByCity;
 
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        {citiesWithFavorites
-          ? citiesWithFavorites.map((city) => (
-            <FavoriteListItem
-              key={city.name}
-              cityName={city.name}
-              offerPreviews={getCityOffers(city, offerPreviews)}
-              onFavoriteClick={onFavoriteClick}
-            />
-          ))
-          : null}
+        {Object.entries(offersByCity).map(([cityName, offers]) => (
+          <FavoriteListItem
+            key={cityName}
+            cityName={cityName}
+            offerPreviews={offers}
+          />
+        ))}
       </ul>
     </section>
   );
