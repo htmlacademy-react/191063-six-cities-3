@@ -1,4 +1,4 @@
-import { FavoriteButtonType } from './favorite-button-type';
+export type FavoriteButtonType = 'PlaceCard' | 'Offer';
 
 export function getFavoriteButtonClasses(buttonType: FavoriteButtonType) {
   switch (buttonType) {

@@ -1,30 +1,66 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { RequestStatus } from '../../../const/api-const';
 import { NameSpace } from '../../../const/store-const';
 import { State } from '../../../types/store-types';
 import { getOfferPreviewById } from '../../../utils/offer-utils';
 
-export const selectOfferFull = (state: State) => state[NameSpace.FullOffer].offerFull;
-export const selectOfferFullStatus = (state: State) => state[NameSpace.FullOffer].offerFullStatus;
+const selectSelf = (state: State) => state[NameSpace.FullOffer];
+const selectOffers = (state: State) => state[NameSpace.Offers];
 
-export const selectNearOfferPreviews = (state: State) => state[NameSpace.FullOffer].nearOfferPreviews;
-export const selectNearOfferPreviewsStatus = (state: State) => state[NameSpace.FullOffer].nearOfferPreviewsStatus;
+export const selectOfferFull = createSelector(
+  selectSelf,
+  (state) => state.offerFull
+);
 
-export const selectReviews = (state: State) => state[NameSpace.FullOffer].reviews;
-export const selectReviewsStatus = (state: State) => state[NameSpace.FullOffer].reviewsStatus;
+export const selectOfferFullStatus = createSelector(
+  selectSelf,
+  (state) => state.offerFullStatus
+);
 
-export const selectPostReviewStatus = (state: State) => state[NameSpace.FullOffer].postReviewStatus;
+export const selectNearOfferPreviews = createSelector(
+  selectSelf,
+  (state) => state.nearOfferPreviews
+);
 
-export const selectCurrentOfferPreview = (state: State) =>
-  getOfferPreviewById(state[NameSpace.Offers].offerPreviews, state[NameSpace.FullOffer].offerFull?.id);
+export const selectNearOfferPreviewsStatus = createSelector(
+  selectSelf,
+  (state) => state.nearOfferPreviewsStatus
+);
 
-export const selectIsLoading = (state: State) =>
-  (state[NameSpace.Offers].offerPreviewsStatus === RequestStatus.Loading ||
-  state[NameSpace.FullOffer].offerFullStatus === RequestStatus.Loading ||
-  state[NameSpace.FullOffer].nearOfferPreviewsStatus === RequestStatus.Loading ||
-  state[NameSpace.FullOffer].reviewsStatus === RequestStatus.Loading);
+export const selectReviews = createSelector(
+  selectSelf,
+  (state) => state.reviews
+);
+export const selectReviewsStatus = createSelector(
+  selectSelf,
+  (state) => state.reviewsStatus
+);
 
-export const selectIsFailed = (state: State) =>
-  (state[NameSpace.Offers].offerPreviewsStatus === RequestStatus.Failed ||
-  state[NameSpace.FullOffer].offerFullStatus === RequestStatus.Failed ||
-  state[NameSpace.FullOffer].nearOfferPreviewsStatus === RequestStatus.Failed ||
-  state[NameSpace.FullOffer].reviewsStatus === RequestStatus.Failed);
+export const selectPostReviewStatus = createSelector(
+  selectSelf,
+  (state) => state.postReviewStatus
+);
+
+export const selectCurrentOfferPreview = createSelector(
+  [selectSelf, selectOffers],
+  (selfState, offersState) =>
+    getOfferPreviewById(offersState.offerPreviews, selfState.offerFull?.id)
+);
+
+export const selectIsLoading = createSelector(
+  [selectSelf, selectOffers],
+  (selfState, offersState) =>
+    offersState.offerPreviewsStatus === RequestStatus.Loading ||
+    selfState.offerFullStatus === RequestStatus.Loading ||
+    selfState.nearOfferPreviewsStatus === RequestStatus.Loading ||
+    selfState.reviewsStatus === RequestStatus.Loading
+);
+
+export const selectIsFailed = createSelector(
+  [selectSelf, selectOffers],
+  (selfState, offersState) =>
+    offersState.offerPreviewsStatus === RequestStatus.Failed ||
+    selfState.offerFullStatus === RequestStatus.Failed ||
+    selfState.nearOfferPreviewsStatus === RequestStatus.Failed ||
+    selfState.reviewsStatus === RequestStatus.Failed
+);

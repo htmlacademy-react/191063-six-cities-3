@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import { CurrentUser } from '../../types/user-types';
 import { AppRoute } from '../../const/app-const';
+import HeaderFavoriteCount from './header-favorite-count';
 
 type HeaderUserProps = {
   user: CurrentUser;
-  favoriteOffersCount: number;
 };
 
 function HeaderUser(props: HeaderUserProps): JSX.Element {
-  const { user, favoriteOffersCount } = props;
+  const { user } = props;
 
   return (
     <li className="header__nav-item user">
@@ -20,7 +20,7 @@ function HeaderUser(props: HeaderUserProps): JSX.Element {
           <img src={user.avatarUrl} alt="Current user avatar." />
         </div>
         <span className="header__user-name user__name">{user.email}</span>
-        <span className="header__favorite-count">{favoriteOffersCount}</span>
+        <HeaderFavoriteCount />
       </Link>
     </li>
   );

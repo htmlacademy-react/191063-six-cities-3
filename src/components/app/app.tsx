@@ -22,9 +22,10 @@ function App(): JSX.Element {
   useEffect(() => {
     if (token) {
       dispatch(userActions.checkAuth())
+        .unwrap()
         .then(() => {
           dispatch(offersActions.getFavoriteOffers());
-        });
+        }).catch(() => {});
     }
   }, [dispatch, token, isLoggedIn]);
 

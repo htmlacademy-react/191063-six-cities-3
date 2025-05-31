@@ -1,5 +1,5 @@
 import { User } from './user-types';
-import { Location } from './location-types';
+import { AppLocation } from './location-types';
 import { City } from './app-types';
 
 export type FavoriteData = {
@@ -13,7 +13,7 @@ export type OfferBase = {
   type: string;
   price: number;
   city: City;
-  location: Location;
+  location: AppLocation;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;

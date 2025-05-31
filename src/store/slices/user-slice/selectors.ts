@@ -1,6 +1,16 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../../const/api-const';
 import { NameSpace } from '../../../const/store-const';
 import { State } from '../../../types/store-types';
 
-export const selectIsUserLoggedIn = (state: State) => state[NameSpace.User].authStatus === AuthorizationStatus.Auth;
-export const selectCurrentUser = (state: State) => state[NameSpace.User].currentUser;
+const selectSelf = (state: State) => state[NameSpace.User];
+
+export const selectIsUserLoggedIn = createSelector(
+  selectSelf,
+  (state) => state.authStatus === AuthorizationStatus.Auth
+);
+
+export const selectCurrentUser = createSelector(
+  selectSelf,
+  (state) => state.currentUser
+);

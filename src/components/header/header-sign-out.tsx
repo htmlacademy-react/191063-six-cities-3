@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const/app-const';
-import useAppDispatch from '../../hooks/use-app-dispatch';
 import { userActions } from '../../store/slices/user-slice/user-slice';
+import useAppDispatch from '../../hooks/use-app-dispatch';
 
 function HeaderSignOut(): JSX.Element {
   const dispatch = useAppDispatch();

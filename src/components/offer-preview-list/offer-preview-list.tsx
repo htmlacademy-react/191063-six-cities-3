@@ -1,33 +1,39 @@
+import { memo } from 'react';
 import { OfferPreview, OfferPreviews } from '../../types/offer-types';
-import { OfferPreviewListType } from './offer-preview-list-type';
-import { getOfferPreviewListClasses } from './offer-preview-list-utils';
-import { updateFavoriteOfferType } from '../../hooks/use-update-favorite-offer';
-import OfferCardMedium from '../../components/offer-card-medium';
+import {
+  getOfferPreviewListClasses,
+  OfferPreviewListType,
+} from './offer-preview-list-utils';
+import { OfferCardType } from '../offer-card/offer-card-utils';
+import OfferCard from '../offer-card';
 
-type OfferPreviewListProps = {
+type OfferPreviewListComponentProps = {
   listType: OfferPreviewListType;
+  cardType: OfferCardType;
   offerPreviews: OfferPreviews;
   onOfferCardHover?: (hoveredOffer: OfferPreview | null) => void;
-  onFavoriteClick: updateFavoriteOfferType;
 };
 
-function OfferPreviewList(props: OfferPreviewListProps): JSX.Element {
-  const { listType, offerPreviews, onOfferCardHover, onFavoriteClick } = props;
+function OfferPreviewListComponent(
+  props: OfferPreviewListComponentProps
+): JSX.Element {
+  const { listType, cardType, offerPreviews, onOfferCardHover } = props;
   const additionalClasses = getOfferPreviewListClasses(listType);
 
   return (
     <div className={additionalClasses.divClass}>
       {offerPreviews.map((offerPreview) => (
-        <OfferCardMedium
+        <OfferCard
           key={offerPreview.id}
-          cardType={listType}
+          cardType={cardType}
           offerPreview={offerPreview}
           onHover={onOfferCardHover}
-          onFavoriteClick={onFavoriteClick}
         />
       ))}
     </div>
   );
 }
+
+const OfferPreviewList = memo(OfferPreviewListComponent);
 
 export default OfferPreviewList;

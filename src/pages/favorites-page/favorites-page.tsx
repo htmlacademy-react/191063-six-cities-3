@@ -5,13 +5,11 @@ import Header from '../../components/header';
 import FavoriteList from '../../components/favorite-list';
 import Footer from '../../components/footer';
 import FavoriteEmpty from '../../components/favorite-empty';
-import useUpdateFavoriteOffer from '../../hooks/use-update-favorite-offer';
 
 function FavoritesPage(): JSX.Element {
   const favoriteOfferPreviews = useAppSelector(
     offersSelectors.selectFavoriteOfferPreviews
   );
-  const updateFavoriteClick = useUpdateFavoriteOffer();
   const isFavoriteEmpty = favoriteOfferPreviews.length === 0;
   const pageAddClass = isFavoriteEmpty ? ' page--favorites-empty' : '';
   const mainAddClass = isFavoriteEmpty ? ' page__main--favorites-empty' : '';
@@ -29,7 +27,6 @@ function FavoritesPage(): JSX.Element {
           ) : (
             <FavoriteList
               offerPreviews={favoriteOfferPreviews}
-              onFavoriteClick={updateFavoriteClick}
             />
           )}
         </div>

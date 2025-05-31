@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import { isEscapeKey } from '../../utils/common-utils';
 import { SortOptionLabel } from './const';
 import { offersSelectors } from '../../store/slices/offers-slice/offers-slice';
 import SortList from './sort-list';
 import useAppSelector from '../../hooks/use-app-selector';
 
-function Sort(): JSX.Element {
+function SortComponent(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const currentSortOption = useAppSelector(offersSelectors.selectSortOption);
   const dropdownRef = useRef<HTMLFormElement>(null);
@@ -15,7 +15,7 @@ function Sort(): JSX.Element {
   };
 
   useEffect(() => {
-    const onEscKeydown = (evt: KeyboardEvent) => {
+    const handleEscKeydown = (evt: KeyboardEvent) => {
       if (isEscapeKey(evt)) {
         evt.preventDefault();
         setIsOpen(false);
@@ -32,12 +32,12 @@ function Sort(): JSX.Element {
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', onEscKeydown);
+      document.addEventListener('keydown', handleEscKeydown);
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('keydown', onEscKeydown);
+      document.removeEventListener('keydown', handleEscKeydown);
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, setIsOpen]);
@@ -64,5 +64,7 @@ function Sort(): JSX.Element {
     </form>
   );
 }
+
+const Sort = memo(SortComponent);
 
 export default Sort;
