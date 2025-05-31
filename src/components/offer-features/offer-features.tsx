@@ -1,4 +1,4 @@
-import { getCapitalizedString, pluralize } from '../../utils';
+import { getCapitalizedString, pluralize } from '../../utils/common-utils';
 
 type OfferFeaturesProps = {
   type: string;

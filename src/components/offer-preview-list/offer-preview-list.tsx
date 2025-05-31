@@ -1,19 +1,24 @@
 import { OfferPreview } from '../../types/offer';
+import { OfferPreviewListType } from './offer-preview-list-type';
+import { getOfferPreviewListClasses } from './offer-preview-list-utils';
 import OfferCardMedium from '../../components/offer-card-medium';
 
 type OfferPreviewListProps = {
+  listType: OfferPreviewListType;
   offerPreviews: OfferPreview[];
-  onOfferCardHover: (hoveredOffer: OfferPreview | null) => void;
+  onOfferCardHover?: (hoveredOffer: OfferPreview | null) => void;
 };
 
 function OfferPreviewList(props: OfferPreviewListProps): JSX.Element {
-  const { offerPreviews, onOfferCardHover } = props;
+  const { listType, offerPreviews, onOfferCardHover } = props;
+  const additionalClasses = getOfferPreviewListClasses(listType);
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={additionalClasses.divClass}>
       {offerPreviews.map((offerPreview) => (
         <OfferCardMedium
           key={offerPreview.id}
+          cardType={listType}
           offerPreview={offerPreview}
           onHover={onOfferCardHover}
         />

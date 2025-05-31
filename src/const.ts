@@ -1,16 +1,46 @@
+import { City } from './types/city';
+
 const NEAR_OFFERS_COUNT = 3;
 const MIN_REVIEW_LENGTH = 50;
-const URL_PIN_DEFAULT = '../../public/img/pin.svg';
-const URL_PIN_ACTIVE = '../../public/img/pin-active.svg';
 
-const SORT_TYPES = [
-  'Popular',
-  'Price: low to high',
-  'Price: high to low',
-  'Top rated first',
-];
+const AppRoute = {
+  Root: '/',
+  Login: '/login',
+  Offer: '/offer/:offerId',
+  Favorites: '/favorites',
+} as const;
 
-const CITIES = {
+const AuthorizationStatus = {
+  Auth: 'AUTH',
+  NoAuth: 'NO_AUTH',
+  Unknown: 'UNKNOWN',
+} as const;
+
+const SortType = {
+  Popular: 'Popular',
+  PriceUp: 'Price: low to high',
+  PriceDown: 'Price: high to low',
+  TopRated: 'Top rated first',
+} as const;
+
+const RatingType = {
+  Perfect: { value: 5, title: 'perfect' },
+  Good: { value: 4, title: 'good' },
+  NotBad: { value: 3, title: 'not bad' },
+  Badly: { value: 2, title: 'badly' },
+  Terribly: { value: 1, title: 'terribly' },
+} as const;
+
+const CityName = {
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf',
+} as const;
+
+const CITIES: Record<keyof typeof CityName, City> = {
   Paris: {
     name: 'Paris',
     location: {
@@ -61,45 +91,13 @@ const CITIES = {
   },
 } as const;
 
-const RATING_TYPES = [
-  { value: 5, title: 'perfect' },
-  { value: 4, title: 'good' },
-  { value: 3, title: 'not bad' },
-  { value: 2, title: 'badly' },
-  { value: 1, title: 'terribly' },
-] as const;
-
-enum CityName {
-  Paris = 'Paris',
-  Cologne = 'Cologne',
-  Brussels = 'Brussels',
-  Amsterdam = 'Amsterdam',
-  Hamburg = 'Hamburg',
-  Dusseldorf = 'Dusseldorf'
-}
-
-enum AppRoute {
-  Root = '/',
-  Login = '/login',
-  Offer = '/offer/:id',
-  Favorites = '/favorites',
-}
-
-enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
-}
-
 export {
   NEAR_OFFERS_COUNT,
   MIN_REVIEW_LENGTH,
-  URL_PIN_DEFAULT,
-  URL_PIN_ACTIVE,
-  SORT_TYPES,
-  CITIES,
-  RATING_TYPES,
-  CityName,
   AppRoute,
   AuthorizationStatus,
+  SortType,
+  RatingType,
+  CityName,
+  CITIES,
 };

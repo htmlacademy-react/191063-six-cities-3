@@ -1,4 +1,4 @@
-import { SORT_TYPES } from '../../const';
+import { SortType } from '../../const';
 import SortItem from './sort-item';
 
 function Sort(): JSX.Element {
@@ -12,7 +12,7 @@ function Sort(): JSX.Element {
         </svg>
       </span>
       <ul className="places__options places__options--custom">
-        {SORT_TYPES.map((sortType) => (
+        {Object.values(SortType).map((sortType) => (
           <SortItem key={sortType} title={sortType} />
         ))}
       </ul>

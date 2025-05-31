@@ -1,36 +1,38 @@
 import { useRef, useEffect } from 'react';
 import { OfferPreview } from '../../types/offer';
 import { City } from '../../types/city';
-import { URL_PIN_DEFAULT, URL_PIN_ACTIVE } from '../../const';
+import { Page } from '../../types/page';
+import { getMapClasses } from './map-utils';
+import { defaultCustomIcon, activeCustomIcon } from './pin-icons';
 import useMap from '../../hooks/use-map';
-import leaflet from 'leaflet';
+import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-type MainMapProps = {
+type MapProps = {
+  pageType: Page;
   city: City;
   offerPreviews: OfferPreview[];
   hoveredOffer: OfferPreview | null;
 };
 
-function MainMap(props: MainMapProps): JSX.Element {
-  const { city, offerPreviews, hoveredOffer } = props;
+function Map(props: MapProps): JSX.Element {
+  const { pageType, city, offerPreviews, hoveredOffer } = props;
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const mapClasses = getMapClasses(pageType);
+
+  const markerLayerRef = useRef<LayerGroup>(leaflet.layerGroup());
 
   useEffect(() => {
-    const defaultCustomIcon = leaflet.icon({
-      iconUrl: URL_PIN_DEFAULT,
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-    });
-
-    const activeCustomIcon = leaflet.icon({
-      iconUrl: URL_PIN_ACTIVE,
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-    });
-
     if (map) {
+      markerLayerRef.current.addTo(map);
+    }
+  }, [map]);
+
+  useEffect(() => {
+    if (map) {
+      markerLayerRef.current.clearLayers();
       offerPreviews.forEach((offerPreview) => {
         leaflet
           .marker(
@@ -45,12 +47,12 @@ function MainMap(props: MainMapProps): JSX.Element {
                   : defaultCustomIcon,
             }
           )
-          .addTo(map);
+          .addTo(markerLayerRef.current);
       });
     }
   }, [map, offerPreviews, hoveredOffer]);
 
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return <section className={mapClasses.sectionClass} ref={mapRef}></section>;
 }
 
-export default MainMap;
+export default Map;

@@ -1,25 +1,34 @@
-import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Offer, OfferPreview } from '../../types/offer';
-import { getRatingWidth } from '../../utils';
+import { OfferPreview } from '../../types/offer';
+import { getOfferPreviewById, getRatingWidth } from '../../utils/offer-utils';
 import { getMockReviews } from '../../mock/reviews-mock';
+import { offerMock } from '../../mock/offer-mock';
+import { getMockNearOfferPreviews } from '../../mock/utils-mock';
 import Header from '../../components/header';
 import OfferGallery from '../../components/offer-gallery';
 import OfferFeatures from '../../components/offer-features';
 import OfferInside from '../../components/offer-inside';
 import OfferHost from '../../components/offer-host';
 import OfferReviews from '../../components/offer-reviews';
-import OfferMap from '../../components/offer-map';
-import OfferNearPlacesList from '../../components/offer-near-places-list';
+import OfferPreviewList from '../../components/offer-preview-list';
+import Map from '../../components/map';
 
 const mockReviews = getMockReviews();
 
 type OfferPageProps = {
-  offer: Offer;
   offerPreviews: OfferPreview[];
 };
 
 function OfferPage(props: OfferPageProps): JSX.Element {
+  const { offerPreviews } = props;
+  const { offerId = '' } = useParams();
+
+  const offerPreview = getOfferPreviewById(offerPreviews, offerId);
+  const offerFull = offerMock;
+  const nearOfferPreviews = getMockNearOfferPreviews(offerPreview);
+  const mapOfferPreviews = [...nearOfferPreviews, offerPreview];
+
   const {
     bedrooms,
     description,
@@ -32,9 +41,7 @@ function OfferPage(props: OfferPageProps): JSX.Element {
     rating,
     title,
     type,
-  } = props.offer;
-  const offerPreviews = props.offerPreviews;
-  const [hoveredOffer, setHoveredOffer] = useState<OfferPreview | null>(null);
+  } = offerFull;
 
   return (
     <div className="page">
@@ -87,16 +94,21 @@ function OfferPage(props: OfferPageProps): JSX.Element {
               <OfferReviews reviews={mockReviews} />
             </div>
           </div>
-          <OfferMap hoveredOffer={hoveredOffer} />
+          <Map
+            pageType={'Offer'}
+            city={offerPreview.city}
+            offerPreviews={mapOfferPreviews}
+            hoveredOffer={offerPreview}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OfferNearPlacesList
-              offerPreviews={offerPreviews}
-              onOfferCardHover={setHoveredOffer}
+            <OfferPreviewList
+              listType={'NearPlaces'}
+              offerPreviews={nearOfferPreviews}
             />
           </section>
         </div>

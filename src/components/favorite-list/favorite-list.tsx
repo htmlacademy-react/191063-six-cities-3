@@ -1,5 +1,5 @@
 import { OfferPreview } from '../../types/offer';
-import { getCitiesWithFavorites, getCityOffers } from '../../utils';
+import { getCitiesWithFavorites, getCityOffers } from '../../utils/city-utils';
 import FavoriteListItem from './favorite-list-item';
 
 type FavoriteListProps = {
