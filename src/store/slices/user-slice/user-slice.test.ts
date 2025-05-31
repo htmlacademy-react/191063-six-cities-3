@@ -1,6 +1,6 @@
 import { AuthorizationStatus, RequestStatus } from '../../../const/api-const';
-import { getMockCurrentUser } from '../../../utils/mock-utils';
 import { userActions, userReducer } from './user-slice';
+import { getMockCurrentUser } from '../../../utils/mock-utils';
 
 describe('User Slice', () => {
   it('should return initial state with empty action', () => {

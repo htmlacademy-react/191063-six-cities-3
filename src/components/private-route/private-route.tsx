@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import { Location, Navigate, useLocation } from 'react-router-dom';
+import { ReactNode } from 'react';
 import { userSelectors } from '../../store/slices/user-slice/user-slice';
 import { AppRoute } from '../../const/app-const';
 import useAppSelector from '../../hooks/use-app-selector';

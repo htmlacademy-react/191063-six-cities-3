@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { OfferPreview, OfferPreviews } from '../../types/offer-types';
 import { pluralize } from '../../utils/common-utils';
 import { City } from '../../types/app-types';
+import OfferPreviewList from '../../components/offer-preview-list';
 import Sort from '../../components/sort';
 import Map from '../../components/map';
-import OfferPreviewList from '../../components/offer-preview-list';
 
 type MainOffersProps = {
   currentCity: City;

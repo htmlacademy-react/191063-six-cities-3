@@ -1,5 +1,5 @@
-import { User } from './user-types';
 import { AppLocation } from './location-types';
+import { User } from './user-types';
 import { City } from './app-types';
 
 export type FavoriteData = {

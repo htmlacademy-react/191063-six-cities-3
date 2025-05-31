@@ -33,12 +33,9 @@ describe('Component: ReviewForm', () => {
 
     render(withStoreComponent);
 
-    // Select a rating
     const ratingInput = screen.getByTitle(RatingOption.Good.title);
     fireEvent.click(ratingInput);
 
-
-    // Enter a valid comment
     const commentInput = screen.getByPlaceholderText(/Tell how was your stay/);
     fireEvent.change(commentInput, {
       target: { value: 'This is a valid review comment that is long enough to meet the minimum length requirement.' }
@@ -57,11 +54,9 @@ describe('Component: ReviewForm', () => {
 
     render(withStoreComponent);
 
-    // Select a rating
     const ratingInput = screen.getByTitle(RatingOption.NotBad.title);
     fireEvent.click(ratingInput);
 
-    // Enter a short comment
     const commentInput = screen.getByPlaceholderText(/Tell how was your stay/);
     fireEvent.change(commentInput, {
       target: { value: 'Too short' }
@@ -80,7 +75,6 @@ describe('Component: ReviewForm', () => {
 
     render(withStoreComponent);
 
-    // Enter a valid comment without selecting rating
     const commentInput = screen.getByPlaceholderText(/Tell how was your stay/);
     fireEvent.change(commentInput, {
       target: { value: 'This is a valid review comment that is long enough to meet the minimum length requirement.' }

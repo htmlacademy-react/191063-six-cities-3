@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const/app-const';
 import { getLogoClasses, getLogoImageSize, LogoType } from './logo-utils';
+import { AppRoute } from '../../const/app-const';
 
 type LogoProps = {
   logoType: LogoType;

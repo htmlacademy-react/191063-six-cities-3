@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { withProviders, withStore } from '../../utils/mock-components';
 import { getMockAppStore, getMockOfferFull } from '../../utils/mock-utils';
+import { withProviders, withStore } from '../../utils/mock-components';
 import FavoriteButton from './favorite-button';
 
 describe('Component: FavoriteButton', () => {

@@ -1,5 +1,5 @@
 import { OfferPreviews } from '../types/offer-types';
-import { CITIES } from '../const/app-const';
+import { Cities } from '../const/app-const';
 import { City } from '../types/app-types';
 
 export function getCitiesWithFavorites(offerPreviews: OfferPreviews): City[] | null {
@@ -7,7 +7,7 @@ export function getCitiesWithFavorites(offerPreviews: OfferPreviews): City[] | n
     offerPreviews.map((offerPreview) => offerPreview.city.name)
   );
 
-  const citiesWithFavorites = Object.values(CITIES).filter((city) =>
+  const citiesWithFavorites = Object.values(Cities).filter((city) =>
     citiesNamesWithFavorites.has(city.name)
   );
 

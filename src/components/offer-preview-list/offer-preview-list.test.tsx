@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { withProviders, withStore } from '../../utils/mock-components';
-import { getMockAppStore, getMockOfferPreviews } from '../../utils/mock-utils';
 import OfferPreviewList, { OfferPreviewListComponentProps } from './offer-preview-list';
+import { getMockAppStore, getMockOfferPreviews } from '../../utils/mock-utils';
+import { withProviders, withStore } from '../../utils/mock-components';
 
 describe('Component: OfferPreviewList', () => {
   const mockAppStore = getMockAppStore();

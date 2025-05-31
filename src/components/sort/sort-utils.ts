@@ -1,5 +1,5 @@
 import { OfferPreview, OfferPreviews } from '../../types/offer-types';
-import { SortOptionType } from './types';
+import { SortOptionType } from './sort-types';
 
 function comparePriceUp(
   firstOfferPreview: OfferPreview,
@@ -22,7 +22,7 @@ function compareRatingDown(
   return secondOfferPreview.rating - firstOfferPreview.rating;
 }
 
-function sortOfferPreviews(
+export function sortOfferPreviews(
   offerPreviews: OfferPreviews,
   sortOption: SortOptionType
 ): OfferPreviews {
@@ -37,5 +37,3 @@ function sortOfferPreviews(
       return offerPreviews;
   }
 }
-
-export { sortOfferPreviews };

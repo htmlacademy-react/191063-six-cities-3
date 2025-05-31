@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { getMockAppStore, getMockOfferPreviews } from '../../utils/mock-utils';
 import { withProviders, withStore } from '../../utils/mock-components';
-import { CITIES } from '../../const/app-const';
+import { Cities } from '../../const/app-const';
 import MainOffers from './main-offers';
 
 describe('Component: MainOffers', () => {
@@ -11,7 +11,7 @@ describe('Component: MainOffers', () => {
 
   it('should render correctly with offers', () => {
     const props = {
-      currentCity: CITIES.Paris,
+      currentCity: Cities.Paris,
       offerPreviews: mockOfferPreviews
     };
 
@@ -27,7 +27,7 @@ describe('Component: MainOffers', () => {
   it('should render correctly with single offer', () => {
     const singleOffer = [mockOfferPreviews[0]];
     const props = {
-      currentCity: CITIES.Amsterdam,
+      currentCity: Cities.Amsterdam,
       offerPreviews: singleOffer
     };
 
@@ -41,7 +41,7 @@ describe('Component: MainOffers', () => {
 
   it('should render map section', () => {
     const props = {
-      currentCity: CITIES.Paris,
+      currentCity: Cities.Paris,
       offerPreviews: mockOfferPreviews
     };
 
@@ -55,7 +55,7 @@ describe('Component: MainOffers', () => {
 
   it('should render sort component', () => {
     const props = {
-      currentCity: CITIES.Paris,
+      currentCity: Cities.Paris,
       offerPreviews: mockOfferPreviews
     };
 

@@ -2,13 +2,16 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from 'redux';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
-import { extractActionsTypes, getMockOfferPreviews } from '../../../utils/mock-utils';
+import {
+  extractActionsTypes,
+  getMockOfferPreviews,
+} from '../../../utils/mock-utils';
 import { AppThunkDispatch, State } from '../../../types/store-types';
 import { APIRoute, RequestStatus } from '../../../const/api-const';
 import { offersActions } from './offers-slice';
-import { SortOption } from '../../../components/sort/const';
+import { SortOption } from '../../../components/sort/sort-const';
 import { createAPI } from '../../../services/api';
-import { CITIES } from '../../../const/app-const';
+import { Cities } from '../../../const/app-const';
 
 describe('Offers slice async actions', () => {
   const axios = createAPI();
@@ -21,7 +24,7 @@ describe('Offers slice async actions', () => {
   >(middleware);
   let store: ReturnType<typeof mockStoreCreator>;
   const initialState = {
-    city: CITIES.Paris,
+    city: Cities.Paris,
     sortOption: SortOption[0],
     offerPreviews: [],
     offerPreviewsStatus: RequestStatus.Idle,
@@ -41,7 +44,9 @@ describe('Offers slice async actions', () => {
       await store.dispatch(offersActions.getOffersPreviews());
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const getOfferFullActionFulfilled = emittedActions.at(1) as ReturnType<typeof offersActions.getOffersPreviews.fulfilled>;
+      const getOfferFullActionFulfilled = emittedActions.at(1) as ReturnType<
+        typeof offersActions.getOffersPreviews.fulfilled
+      >;
 
       expect(extractedActionsTypes).toEqual([
         offersActions.getOffersPreviews.pending.type,
@@ -68,19 +73,25 @@ describe('Offers slice async actions', () => {
   describe('getFavoriteOffers', () => {
     it('should dispatch "getFavoriteOffers.pending" and "getFavoriteOffers.fulfilled" when server response 200', async () => {
       const mockFavoriteOfferPreviews = getMockOfferPreviews();
-      mockAxiosAdapter.onGet(APIRoute.Favorite).reply(200, mockFavoriteOfferPreviews);
+      mockAxiosAdapter
+        .onGet(APIRoute.Favorite)
+        .reply(200, mockFavoriteOfferPreviews);
 
       await store.dispatch(offersActions.getFavoriteOffers());
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const getOfferFullActionFulfilled = emittedActions.at(1) as ReturnType<typeof offersActions.getFavoriteOffers.fulfilled>;
+      const getOfferFullActionFulfilled = emittedActions.at(1) as ReturnType<
+        typeof offersActions.getFavoriteOffers.fulfilled
+      >;
 
       expect(extractedActionsTypes).toEqual([
         offersActions.getFavoriteOffers.pending.type,
         offersActions.getFavoriteOffers.fulfilled.type,
       ]);
 
-      expect(getOfferFullActionFulfilled.payload).toEqual(mockFavoriteOfferPreviews);
+      expect(getOfferFullActionFulfilled.payload).toEqual(
+        mockFavoriteOfferPreviews
+      );
     });
 
     it('should dispatch "getFavoriteOffers.pending" and "getFavoriteOffers.rejected" when server response 400', async () => {
@@ -101,15 +112,21 @@ describe('Offers slice async actions', () => {
     it('should dispatch "updateFavoriteOffer.pending" and "updateFavoriteOffer.fulfilled" when server response 200', async () => {
       const mockOfferPreview = getMockOfferPreviews()[0];
       mockOfferPreview.isFavorite = false;
-      mockAxiosAdapter.onPost(`${APIRoute.Favorite}/${mockOfferPreview.id}/1`).reply(200, mockOfferPreview);
+      mockAxiosAdapter
+        .onPost(`${APIRoute.Favorite}/${mockOfferPreview.id}/1`)
+        .reply(200, mockOfferPreview);
 
-      await store.dispatch(offersActions.updateFavoriteOffer({
-        offerId: mockOfferPreview.id,
-        status: 1,
-      }));
+      await store.dispatch(
+        offersActions.updateFavoriteOffer({
+          offerId: mockOfferPreview.id,
+          status: 1,
+        })
+      );
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const getOfferFullActionFulfilled = emittedActions.at(1) as ReturnType<typeof offersActions.updateFavoriteOffer.fulfilled>;
+      const getOfferFullActionFulfilled = emittedActions.at(1) as ReturnType<
+        typeof offersActions.updateFavoriteOffer.fulfilled
+      >;
 
       expect(extractedActionsTypes).toEqual([
         offersActions.updateFavoriteOffer.pending.type,
@@ -122,12 +139,16 @@ describe('Offers slice async actions', () => {
     it('should dispatch "updateFavoriteOffer.pending" and "updateFavoriteOffer.rejected" when server response 400', async () => {
       const mockOfferPreview = getMockOfferPreviews()[0];
       mockOfferPreview.isFavorite = false;
-      mockAxiosAdapter.onPost(`${APIRoute.Favorite}/${mockOfferPreview.id}/1`).reply(400);
+      mockAxiosAdapter
+        .onPost(`${APIRoute.Favorite}/${mockOfferPreview.id}/1`)
+        .reply(400);
 
-      await store.dispatch(offersActions.updateFavoriteOffer({
-        offerId: mockOfferPreview.id,
-        status: 1,
-      }));
+      await store.dispatch(
+        offersActions.updateFavoriteOffer({
+          offerId: mockOfferPreview.id,
+          status: 1,
+        })
+      );
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
 

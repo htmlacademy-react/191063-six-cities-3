@@ -1,11 +1,11 @@
-import { useRef, useEffect } from 'react';
-import { OfferPreview, OfferPreviews } from '../../types/offer-types';
-import { City, Page } from '../../types/app-types';
-import { getMapClasses } from './map-utils';
-import { defaultCustomIcon, activeCustomIcon } from './pin-icons';
-import useMap from '../../hooks/use-map';
 import leaflet, { LayerGroup } from 'leaflet';
+import { useRef, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
+import { defaultCustomIcon, activeCustomIcon } from './pin-icons';
+import { OfferPreview, OfferPreviews } from '../../types/offer-types';
+import { getMapClasses } from './map-utils';
+import { City, Page } from '../../types/app-types';
+import useMap from '../../hooks/use-map';
 
 export type MapProps = {
   pageType: Page;

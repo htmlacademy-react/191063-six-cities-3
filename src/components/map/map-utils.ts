@@ -1,6 +1,6 @@
 import { Page } from '../../types/app-types';
 
-function getMapClasses(pageType: Page) {
+export function getMapClasses(pageType: Page) {
   switch (pageType) {
     case 'Main':
       return {
@@ -16,5 +16,3 @@ function getMapClasses(pageType: Page) {
       };
   }
 }
-
-export { getMapClasses };

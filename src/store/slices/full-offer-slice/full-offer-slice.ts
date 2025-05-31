@@ -1,27 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { updateFavoriteOffer } from '../offers-slice/async-actions';
 import { FullOfferSlice } from '../../../types/store-types';
 import { RequestStatus } from '../../../const/api-const';
-import { NameSpace } from '../../../const/store-const';
-import { updateFavoriteOffer } from '../offers-slice/async-actions';
+import { Namespace } from '../../../const/store-const';
+import { logout } from '../user-slice/async-actions';
+import {
+  selectNearOfferPreviewsStatus,
+  selectCurrentOfferPreview,
+  selectNearOfferPreviews,
+  selectPostReviewStatus,
+  selectOfferFullStatus,
+  selectReviewsStatus,
+  selectIsLoading,
+  selectOfferFull,
+  selectIsFailed,
+  selectReviews,
+} from './selectors';
 import {
   getNearOfferPreviews,
   getOfferFull,
   getReviews,
   postReview,
 } from './async-actions';
-import {
-  selectCurrentOfferPreview,
-  selectIsFailed,
-  selectIsLoading,
-  selectNearOfferPreviews,
-  selectNearOfferPreviewsStatus,
-  selectOfferFull,
-  selectOfferFullStatus,
-  selectPostReviewStatus,
-  selectReviews,
-  selectReviewsStatus,
-} from './selectors';
-import { logout } from '../user-slice/async-actions';
 
 const initialState: FullOfferSlice = {
   offerFull: null,
@@ -34,7 +34,7 @@ const initialState: FullOfferSlice = {
 };
 
 const fullOfferSlice = createSlice({
-  name: NameSpace.FullOffer,
+  name: Namespace.FullOffer,
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -101,21 +101,21 @@ const fullOfferSlice = createSlice({
 export const fullOfferReducer = fullOfferSlice.reducer;
 
 export const fullOfferActions = {
-  getOfferFull,
   getNearOfferPreviews,
+  getOfferFull,
   getReviews,
   postReview,
 };
 
 export const fullOfferSelectors = {
-  selectOfferFull,
-  selectOfferFullStatus,
-  selectNearOfferPreviews,
   selectNearOfferPreviewsStatus,
-  selectReviews,
-  selectReviewsStatus,
+  selectCurrentOfferPreview,
+  selectNearOfferPreviews,
   selectPostReviewStatus,
+  selectOfferFullStatus,
+  selectReviewsStatus,
+  selectOfferFull,
   selectIsLoading,
   selectIsFailed,
-  selectCurrentOfferPreview,
+  selectReviews,
 };

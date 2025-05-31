@@ -1,13 +1,13 @@
 import { renderHook } from '@testing-library/react';
 import leaflet from 'leaflet';
-import { CITIES } from '../const/app-const';
+import { Cities } from '../const/app-const';
 import useMap from './use-map';
 
 describe('Hook: useMap', () => {
   let mockMapRef = {
     current: document.createElement('div'),
   };
-  const mockCity = CITIES.Paris;
+  const mockCity = Cities.Paris;
 
   beforeEach(() => {
     mockMapRef = {

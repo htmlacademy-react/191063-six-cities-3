@@ -1,8 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { withProviders, withStore } from '../../utils/mock-components';
-import { getMockAppStore, getMockCurrentUser, getMockOfferFull, getMockReviews } from '../../utils/mock-utils';
 import { AuthorizationStatus, RequestStatus } from '../../const/api-const';
+import { withProviders, withStore } from '../../utils/mock-components';
 import { UserSlice } from '../../types/store-types';
+import {
+  getMockCurrentUser,
+  getMockOfferFull,
+  getMockAppStore,
+  getMockReviews
+} from '../../utils/mock-utils';
 import OfferReviews from './offer-reviews';
 import ReviewForm from '../review-form';
 
@@ -31,7 +36,6 @@ describe('Component: OfferReviews', () => {
 
     render(withStoreComponent);
 
-    // expect(screen.getByText(`Reviews · ${mockReviews.length}`)).toBeInTheDocument();
     expect(screen.getAllByRole('listitem')).toHaveLength(mockReviews.length);
     expect(screen.getByTestId(reviewsFromTestId)).toBeInTheDocument();
   });
@@ -54,7 +58,6 @@ describe('Component: OfferReviews', () => {
 
     render(withStoreComponent);
 
-    // expect(screen.getByText(`Reviews · ${mockReviews.length}`)).toBeInTheDocument();
     expect(screen.getAllByRole('listitem')).toHaveLength(mockReviews.length);
     expect(screen.queryByTestId(reviewsFromTestId)).not.toBeInTheDocument();
   });
@@ -77,7 +80,6 @@ describe('Component: OfferReviews', () => {
 
     render(withStoreComponent);
 
-    // expect(screen.getByText('Reviews · 0')).toBeInTheDocument();
     expect(screen.queryByRole('listitem')).not.toBeInTheDocument();
     expect(screen.queryByTestId(reviewsFromTestId)).not.toBeInTheDocument();
   });
@@ -100,10 +102,9 @@ describe('Component: OfferReviews', () => {
 
     render(withStoreComponent);
 
-    const reviewItems = screen.getAllByRole('listitem');
-    const reviewDates = reviewItems.map((item) => item.querySelector('time')?.getAttribute('datetime'));
+    const reviewItems = screen.getAllByTestId('review-time-test-id');
+    const reviewDates = reviewItems.map((item) => item.getAttribute('datetime'));
 
-    // Check if dates are in descending order
     const isDescending = reviewDates.every((date, index) =>
       index === 0 || new Date(date!) <= new Date(reviewDates[index - 1]!));
 

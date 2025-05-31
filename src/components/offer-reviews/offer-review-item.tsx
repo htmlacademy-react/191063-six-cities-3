@@ -34,7 +34,7 @@ function OfferReviewItem(props: ReviewItemProps): JSX.Element {
           </div>
         </div>
         <p className="reviews__text">{comment}</p>
-        <time className="reviews__time" dateTime={date}>
+        <time data-testid="review-time-test-id" className="reviews__time" dateTime={date}>
           {formattedDate}
         </time>
       </div>
